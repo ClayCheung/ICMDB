@@ -1,0 +1,243 @@
+{% extends 'base/base_workorder.html' %}
+
+{% load staticfiles %}
+
+{% block head %}
+    <link rel="stylesheet" href="{% static 'bower_components/bootstrap/css/bootstrap-datetimepicker.min.css' %}">
+{% endblock %}
+
+{% block content %}
+
+<form action="/workorder/update/" name="addForm" id="addForm" enctype="multipart/form-data" method="post">
+{% csrf_token %}
+
+
+<div class="box box-info">
+        <div class="box-header with-border">
+          <h3 class="box-title">修改工单</h3>
+        </div>
+        <!-- /.box-header -->
+        <div class="box-body">
+          <div class="row">
+            <div class="col-md-6">
+
+              <div class="form-group col-xs-6">
+                  <input type="hidden" name="wo_id" value="{{ wo.id }}"/>
+                  <label >工单号</label>
+                  <input type="text" class="form-control " name="workorder_num" id="workorder_num" value="{{ wo.workOrder_num.num }}" disabled="">
+              </div>
+
+              <div class="form-group col-xs-6">
+                  <label>标题</label>
+                  <input type="text" class="form-control" name="title" id="title" value="{{ wo.title }}">
+              </div>
+
+              <div class="form-group col-xs-6">
+                         <label for="workorder_type" class=" control-label">工单类型</label>
+                         <select name="workorder_type" id="workorder_type" class="form-control  select2 " style="width: 100%;">
+                         </select>
+              </div>
+
+              <div class="form-group col-xs-6">
+                  <label for="workorder_type" class=" control-label">DeadLine</label>
+{#                  <input type="datetime-local" name="deadline" id="deadline" class="form-control" />#}
+
+                  <input type="text" class="form-control pull-right form_datetime" name="deadline" id="deadline" value="{{ wo.deadLine |date:'Y-m-d H:m:s'}}">
+
+              </div>
+              <!-- /.form-group -->
+            </div>
+            <!-- /.col -->
+            <div class="col-md-6">
+              <div class="form-group col-xs-6">
+                <label>所属项目</label>
+                  <input type="text" class="form-control" name="project_name" id="project_name" value="{{ wo.project }}">
+              </div>
+              <!-- /.form-group -->
+              <div class="row1">
+                <div class="form-group col-xs-2">
+                  <label for="sponsor" class=" control-label">发起人</label>
+                  <input type="text" class="form-control" name="sponsor" id="sponsor" value="{{ wo.sponsor }}" disabled="">
+                </div>
+                <div class="form-group col-xs-2">
+                  <label for="approver" class=" control-label">审批人</label>
+                  <select name="approver" id="approver" class="form-control  select2 select2-hidden-accessible" style="width: 100%;">
+                  </select>
+                </div>
+                <div class="form-group col-xs-2">
+                  <label for="executor" class=" control-label">执行人</label>
+                  <select name="executor" id="executor" class="form-control  select2 select2-hidden-accessible" style="width: 100%;">
+                  </select>
+                </div>
+              </div>
+              <div class="form-group col-xs-6">
+                <label for="attachment" class=" control-label">附件</label>
+                  <input type="file"  class="btn-primary" defaultValue="{{ wo.attachment }}"  id="attachment" name="attachment">
+                        <p class="help-block">注意：如果有多个文件，请合成一个包</p>
+              </div>
+              <!-- /.form-group -->
+            </div>
+            <!-- /.col -->
+          </div>
+          <!-- /.row -->
+        </div>
+        <!-- /.box-body -->
+
+         <section class="content">
+          <div class="row">
+            <div class="col-md-12">
+              <div class="box box-default">
+
+                <div class="box-body pad">
+                        <textarea id="workorder_content" name="workorder_content" >
+                                        {{ wo.content }}
+                        </textarea>
+                </div>
+              </div>
+              <!-- /.box -->
+
+
+            </div>
+            <!-- /.col-->
+                <div class="btn-group col-md-6 pull-right">
+                  <button type="submit" class="btn btn-info" id="submit_send" name="submit_send">发送审批</button>
+                  <button type="button" class="btn btn-info dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
+                    <span class="caret"></span>
+                  </button>
+                  <ul class="dropdown-menu" role="menu">
+                    <li><button type="submit" class="btn btn-info pull-right" id="submit_sendAndEmail" name="submit_sendAndEmail">发送并邮件</button></li>
+                  </ul>
+                </div>
+                <div class="col-md-6">
+                 <button type="submit" class="btn bg-navy-active pull-right" id="submit_save" name="submit_save" >保存</button>
+                </div>
+          </div>
+          <!-- ./row -->
+         </section>
+</div>
+
+</form>
+
+{% endblock %}
+
+
+
+{% block script %}
+
+<script>
+
+        var data_A = {{ workorder_type_list|safe }};
+        var project_list = document.getElementById("workorder_type");
+
+        project_list.options.length = 0;
+        for (var i=0; i<data_A.length; i++){
+            var opt = document.createElement("option");
+            opt.value = i;
+            opt.innerText = data_A[i];
+            project_list.options.add(opt);
+        }
+        project_list[{{ wo.o_type }}].selected=true;
+
+</script>
+
+<script>
+
+        var data_A = {{ approver_list|safe }};
+        var project_list = document.getElementById("approver");
+
+        project_list.options.length = 0;
+        for (var i=0; i<data_A.length; i++){
+            var opt = document.createElement("option");
+            opt.value = i;
+            opt.innerText = data_A[i];
+            project_list.options.add(opt);
+        }
+        project_list[{{ approver_index }}].selected=true;
+
+
+</script>
+
+<script>
+
+        var data_A = {{ executor_list|safe }};
+        var project_list = document.getElementById("executor");
+
+        project_list.options.length = 0;
+        for (var i=0; i<data_A.length; i++){
+            var opt = document.createElement("option");
+            opt.value = i;
+            opt.innerText = data_A[i];
+            project_list.options.add(opt);
+        }
+        project_list[{{ executor_index }}].selected=true;
+
+</script>
+
+
+
+<script>
+  $(function () {
+    // Replace the <textarea id="workorder_content"> with a CKEditor
+    // instance, using default configuration.
+    CKEDITOR.replace('workorder_content',
+    {
+             toolbar :
+             [
+                //加粗     斜体，     下划线      穿过线      下标字        上标字
+                ['Bold','Italic','Underline','Strike','Subscript','Superscript'],
+                // 数字列表          实体列表            减小缩进    增大缩进
+                ['NumberedList','BulletedList','-','Outdent','Indent'],
+                //左对 齐             居中对齐          右对齐          两端对齐
+                ['JustifyLeft','JustifyCenter','JustifyRight','JustifyBlock'],
+                //超链接  取消超链接
+                ['Link','Unlink'],
+                //图片    flash    表格       水平线            表情       特殊字符        分页符
+                ['Flash','Table','HorizontalRule','Smiley','SpecialChar','PageBreak'],
+                // 样式       格式      字体    字体大小
+                ['Styles','Format','Font','FontSize'],
+                //文本颜色     背景颜色
+                ['TextColor','BGColor'],
+                //全屏           显示区块
+                ['Maximize', 'ShowBlocks','-']
+             ]
+        }
+    );
+
+  })
+</script>
+
+
+
+<script type="text/javascript">
+    /*点保存，保存更新工单*/
+	$("#submit_save").click(function(){
+        $("form[name='addForm']").submit();
+        parent.layer.msg("工单已保存");
+	});
+
+
+    /*input 时间输入选择*/
+    $(".form_datetime").datetimepicker({
+            language:  'zh',
+            //weekStart: 1,
+            //todayBtn:  1,
+            autoclose: 1,
+            todayHighlight: 1,
+            //startView: 2,
+            forceParse: 0,
+            showMeridian: 1,
+            //format: 'yyyy-mm-dd'
+        }).on('changeDate', function (ev) {
+            $(this).datetimepicker('hide');
+    });
+
+// select2
+  $(function () {
+    //Initialize Select2 Elements
+    $(".select2").select2();
+  });
+</script>
+
+
+
+{% endblock %}

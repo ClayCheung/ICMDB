@@ -1,0 +1,226 @@
+{% extends 'base/base_operate.html' %}
+{% load staticfiles %}
+{% block title %}开始检查布线表{% endblock %}
+
+{% block css %}
+    <link rel="stylesheet" href="{% static 'dist/css/skins/_all-skins.min.css' %}">
+    <!-- Google Font -->
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700,300italic,400italic,600italic">
+{% endblock %}
+
+{% block content %}
+
+
+    <section class="content">
+      <div class="row">
+        <div class="col-xs-12">
+          <div class="box">
+            <div class="box-header">
+              <h3 class="box-title">{{ cabletableFile.project.name }}-全资产总览</h3>
+            </div>
+            <!-- /.box-header -->
+            <div class="box-body">
+              <table id="example1" class="table table-bordered table-striped">
+                <thead>
+                <tr>
+                  <th>资产名称</th>
+                  <th>机柜号</th>
+                  <th>资产类型</th>
+                  <th>设备厂家</th>
+                  <th>设备型号</th>
+                </tr>
+                </thead>
+                <tbody>
+                {% for dev in netDevObjList %}
+                    <tr>
+                      <td>{{ dev.asset.name }}</td>
+                      <td>{{ dev.asset.locate.cabinet }}{{ dev.asset.locate.cabinet_num }}</td>
+                      <td>{{ dev.get_sub_asset_type_display }}</td>
+                      <td>{{ dev.asset.vender }}</td>
+                      <td>{{ dev.asset.model }}</td>
+                    </tr>
+                {% endfor %}
+                {% for dev in serverDevObjList %}
+                    <tr>
+                      <td>{{ dev.asset.name }}</td>
+                      <td>{{ dev.asset.locate.cabinet }}{{ dev.asset.locate.cabinet_num }}</td>
+                      <td>{{ dev.asset.asset_type }}</td>
+                      <td>{{ dev.asset.vender }}</td>
+                      <td>{{ dev.asset.model }}</td>
+                    </tr>
+                {% endfor %}
+                {% for dev in storDevObjList %}
+                    <tr>
+                      <td>{{ dev.asset.name }}</td>
+                      <td>{{ dev.asset.locate.cabinet }}{{ dev.asset.locate.cabinet_num }}</td>
+                      <td>{{ dev.asset.asset_type }}</td>
+                      <td>{{ dev.asset.vender }}</td>
+                      <td>{{ dev.asset.model }}</td>
+                    </tr>
+                {% endfor %}
+
+
+                </tbody>
+                <tfoot>
+                <tr>
+                  <th>资产名称</th>
+                  <th>机柜号</th>
+                  <th>资产类型</th>
+                  <th>设备厂家</th>
+                  <th>设备型号</th>
+                </tr>
+                </tfoot>
+              </table>
+              </div>
+              </div>
+
+            </div>
+            <!-- /.box-body -->
+              <form action="/cabletable/other_info/"  method="post">
+              {% csrf_token %}
+{#                <div class="box-footer">#}
+{#                    <button type="submit" name="start_check" class="btn btn-info pull-right">确认信息无误，开始检查布线表</button>#}
+{#                </div>#}
+
+                 <div id="start_check" class="box-footer">
+                    <button type="submit" name="start_check" class="btn btn-info pull-right"
+                            data-loading-text="Loading...">确认信息无误，开始检查布线表
+                    </button>
+                    <button type="submit" name="reset_data" class="btn btn-danger pull-right"
+                            data-loading-text="Loading...">清空数据
+                    </button>
+
+
+                 </div>
+
+              </form>
+            </div>
+          <!-- /.box -->
+
+        <!-- /.col -->
+
+          <div class="box box-warning box-solid ">
+            <div class="box-header with-border">
+              <h3 class="box-title">机柜与设备名是否匹配</h3>
+
+              <div class="box-tools pull-right">
+                <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
+                </button>
+              </div>
+              <!-- /.box-tools -->
+            </div>
+            <!-- /.box-header -->
+            <div class="box-body">
+              {% for cabinetNum_log_row in err_cabinetNum_log %}
+                    {{ cabinetNum_log_row }}
+                    <br>
+              {% endfor %}
+
+            </div>
+            <!-- /.box-body -->
+          </div>
+          <!-- /.box -->
+
+          <div class="box box-danger box-solid ">
+            <div class="box-header with-border">
+              <h3 class="box-title">网络设备端口命名是否合规</h3>
+
+              <div class="box-tools pull-right">
+                <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
+                </button>
+              </div>
+              <!-- /.box-tools -->
+            </div>
+            <!-- /.box-header -->
+            <div class="box-body">
+              {% for port_log_row in err_portFormat_log %}
+                    {{ port_log_row }}
+                    <br>
+              {% endfor %}
+
+            </div>
+            <!-- /.box-body -->
+          </div>
+          <!-- /.box -->
+
+          <div class="box box-danger box-solid ">
+            <div class="box-header with-border">
+              <h3 class="box-title">是否布了冲突的线</h3>
+
+              <div class="box-tools pull-right">
+                <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
+                </button>
+              </div>
+              <!-- /.box-tools -->
+            </div>
+            <!-- /.box-header -->
+            <div class="box-body">
+              {% for mutiAssign_log_row in err_portMutiAssign_log %}
+                    {{ mutiAssign_log_row }}
+                    <br>
+              {% endfor %}
+            </div>
+            <!-- /.box-body -->
+          </div>
+          <!-- /.box -->
+
+
+          <div class="box box-warning box-solid ">
+            <div class="box-header with-border">
+              <h3 class="box-title">堆叠设备的端口是否重复</h3>
+
+              <div class="box-tools pull-right">
+                <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
+                </button>
+              </div>
+              <!-- /.box-tools -->
+            </div>
+            <!-- /.box-header -->
+            <div class="box-body">
+              {% for log_row in warn_samePort_log %}
+                    {{ log_row }}
+                    <br>
+              {% endfor %}
+
+            </div>
+            <!-- /.box-body -->
+          </div>
+          <!-- /.box -->
+
+        <!-- /.col -->
+
+      <!-- /.row -->
+    </section>
+{% endblock %}
+
+{% block script %}
+
+<!-- DataTables -->
+<script src="{% static 'bower_components/datatables.net/js/jquery.dataTables.min.js' %}"></script>
+<script src="{% static 'bower_components/datatables.net-bs/js/dataTables.bootstrap.min.js' %}"></script>
+<!-- SlimScroll -->
+<script src="{% static 'bower_components/jquery-slimscroll/jquery.slimscroll.min.js' %}"></script>
+<!-- FastClick -->
+<script src="{% static 'bower_components/fastclick/lib/fastclick.js' %}"></script>
+<!-- AdminLTE for demo purposes -->
+<script src="{% static 'dist/js/demo.js' %}"></script>
+<!-- page script -->
+<script>
+  $(function () {
+      $('#example1').DataTable()
+
+  })
+</script>
+
+<script type="text/javascript">
+
+    $(function() {
+        $("#start_check .btn").click(function(){
+            $(this).button('loading').delay(1000).queue(function() {
+            });
+        });
+    });
+
+</script>
+
+{% endblock %}

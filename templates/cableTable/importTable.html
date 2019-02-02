@@ -1,0 +1,351 @@
+{% extends 'base/base_operate.html' %}
+{% load staticfiles %}
+{% block title %}布线信息导入-入口{% endblock %}
+
+{% block css %}
+
+    <style>
+
+div.file_import{display:inline-block;position:relative;}
+div.file_import input{position:absolute;left:0px;top:0px;zoom:1;filter:alpha(opacity=0);opacity:0;font-size:20px;margin-left:-240px}
+    </style>
+
+    <!-- Select2 -->
+  <link rel="stylesheet" href="{% static 'bower_components/select2/dist/css/select2.min.css' %}">
+{% endblock %}
+
+{% block content %}
+
+    <form action="/cabletable/import-entrance/" enctype="multipart/form-data" method="post">
+    {% csrf_token %}
+        <section class="content">
+          <div class="box box-primary">
+            <div class="box-header with-border">
+              <h3 class="box-title">导入布线表</h3>
+
+              <i  class="fa fa-info-circle pull-right" title="Popover title"
+			    data-container="body" data-toggle="popover" data-placement="left"
+			    data-content="右侧的 Popover 中的一些内容">
+              </i>
+            </div>
+
+
+
+            <!-- /.box-header -->
+            <!-- form start -->
+            <form role="form">
+              <div class="box-body">
+                <div class="form-group">
+                  <label for="project_name">输入项目名</label>
+                    <input id="project_name" name="project_name" value="{{ project_name }}" type="text" class="form-control " width="10" placeholder="项目名">
+                    <br>
+
+                  <input type="file"  class="btn-primary" id="cabletable" name="cabletable">
+
+                  <p class="help-block">注意：必须是.xlsx格式</p>
+                </div>
+              </div>
+              <!-- /.box-body -->
+
+              <div class="box-footer">
+                <button type="submit" name="submit_cableTable" class="btn btn-primary">提交</button>
+              </div>
+            </form>
+          </div>
+        </section>
+    </form>
+
+    <form action="/cabletable/other_info/" enctype="multipart/form-data" method="post">
+    {% csrf_token %}
+        <section class="content">
+            <div class="row">
+            <div class="col-xs-12">
+              <div class="box">
+                <div class="box-header">
+                  <h3 class="box-title">附加信息表</h3>
+
+                  <i  class="fa fa-info-circle pull-right" title="Tips:"
+			        data-container="body" data-toggle="popover" data-placement="left"
+			        data-content="如果不是网络设备，则 sysname 不用填">
+                  </i>
+                </div>
+                <!-- /.box -->
+                <div class="box-body table-responsive no-padding">
+                  <table class="table table-hover">
+                    <tr>
+                      <th>资产名</th>
+                      <th>sysname</th>
+                      <th>类型</th>
+                      <th>厂商</th>
+                      <th>型号</th>
+                    </tr>
+
+                    {% for netDevName in netDeviceList %}
+
+                        <tr>
+                            <td><div name="netDevName">{{ netDevName }}</div></td>
+                            <td>
+                             <input name="sysname" class="form-control input-sm" type="text" placeholder="sysname">
+                            </td>
+                            <td>
+                              <div class="form-group">
+                                <select name="e_type" class="form-control select2 select2-hidden-accessible" style="width: 100%;" tabindex="-1" aria-hidden="true">
+                                </select>
+                              </div>
+                            </td>
+                            <td>
+                              <div class="form-group">
+                                <select name="e_vender" class="form-control select2 select2-hidden-accessible" style="width: 100%;" tabindex="-1" aria-hidden="true">
+                                </select>
+                              </div>
+                            </td>
+                            <td>
+                              <div class="form-group">
+                                <select name="e_model" class="form-control select2 select2-hidden-accessible" style="width: 100%;" tabindex="-1" aria-hidden="true">
+                                </select>
+                              </div>
+                            </td>
+                        </tr>
+
+                    {% endfor %}
+
+
+
+
+
+                  </table>
+                </div>
+                <div class="box-footer">
+                <!-- /.submit -->
+
+{#                    # 隐藏的好看的file input#}
+                    <span class="btn bg-maroon-active btn-file pull-left margin">
+                        <span>导入</span>
+                        <input type="file" id="submit_import" name="submit_import" >
+                     </span>
+                <!-- /.submit -->
+                    <div><button type="submit" name="submit_export" class="btn bg-olive-active pull-left margin">导出</button></div>
+                <!-- /.submit -->
+                    <div id="submit_plus" >
+                        <button type="submit" name="submit_plus" class="btn btn-info pull-right"
+                                data-loading-text="Loading...">提交附加信息
+                        </button>
+                    </div>
+
+                </div>
+                <!-- /.submit -->
+              </div>
+              <!-- /.box -->
+            </div>
+          </div>
+        </section>
+    </form>
+{% endblock %}
+
+{% block script %}
+
+    <!-- Select2 -->
+    <script src="{% static 'bower_components/select2/dist/js/select2.full.min.js' %}"></script>
+    <script>
+      $(function () {
+        //Initialize Select2 Elements
+        $('.select2').select2()
+          })
+    </script>
+
+
+    <script type="text/javascript">
+{#    每个select input循环调用JS#}
+
+        {% for device in netDeviceList %}
+            Set_td_js({{ forloop.counter0 }});
+        {% endfor %}
+
+
+        function Set_td_js(i) {
+            var data_A = ["交换机","防火墙","负载均衡器","SAN交换机","路由器"];
+
+            var list_A = document.getElementsByName("e_type")[i];
+            var list_B = document.getElementsByName("e_vender")[i];
+            var list_C = document.getElementsByName("e_model")[i];
+
+
+
+    {#    创建A级下拉框的option#}
+            list_A.options.length = 0;
+            for (var i=0; i<data_A.length; i++){
+                var opt = document.createElement("option");
+                opt.value = i;
+                opt.innerText = data_A[i];
+                list_A.options.add(opt);
+            }
+
+
+    {#    A级下拉框 onchange，先重置B、C级下拉框的值，再根据A级选中的选项值，创建B级下拉框的option #}
+            list_A.onchange = ListAChange;
+
+            function ListAChange() {
+                list_C.options.length = 0;
+                list_B.options.length = 0;
+
+                var a = list_A[list_A.selectedIndex].value;
+
+                CreateListB(a);
+                ListBChange();
+            }
+
+            function CreateListB(a) {
+                var data_B;
+                var data_0_B = ["H3C","华为","锐捷","思科"];
+                var data_1_B = ["H3C","华为"];
+                var data_2_B = ["迪普","Array","F5"];
+                var data_3_B = ["博科","思科"];
+                var data_4_B = ["H3C","华为","思科"];
+
+                if (a==0){
+                    data_B = data_0_B;
+                }
+                else if (a==1) {
+                    data_B = data_1_B;
+                }
+                else if (a==2) {
+                    data_B = data_2_B;
+                }
+                else if (a==3) {
+                    data_B = data_3_B;
+                }
+                else if (a==4) {
+                    data_B = data_4_B;
+                }
+
+                for (var i=0; i<data_B.length; i++){
+                    var opt = document.createElement("option");
+                    opt.value = i;
+                    opt.innerText = data_B[i];
+                    list_B.options.add(opt);
+                }
+            }
+
+
+
+    {#    B级下拉框 onchange, 先重置C级下拉框，再根据A级、B级选中的选项值， 创建C级下拉框的option#}
+            list_B.onchange = ListBChange;
+
+            function ListBChange() {
+                list_C.options.length = 0;
+
+                var a = list_A[list_A.selectedIndex].value;
+                var b = list_B[list_B.selectedIndex].value;
+
+                CreateListC(a,b);
+            }
+
+            function CreateListC(a,b) {
+                var data_C;
+                var data_0_0_C = ["S6900-4F","S6800","S12500","S7600","S6800"];
+                var data_0_1_C = ["CE12800","CE6851","S9300"];
+                var data_0_2_C = ["RJ5500"];
+                var data_0_3_C = ["N7710","N5K"];
+                var data_1_0_C = ["M9000","F5000C"];
+                var data_1_1_C = ["E8000E-X8"];
+                var data_2_0_C = ["DPtech ADX3000"];
+                var data_2_1_C = ["APV 9650"];
+                var data_2_2_C = ["F5的啥型号"];
+                var data_3_0_C = ["Brocade 6510"];
+                var data_3_1_C = ["思科SAN交换的啥型号"];
+                var data_4_0_C = ["华三路由器"];
+                var data_4_1_C = ["华为路由器"];
+                var data_4_2_C = ["思科路由器"];
+                if (a==0){
+                    if (b==0){
+                        data_C = data_0_0_C;
+                    }
+                    else if (b==1){
+                        data_C = data_0_1_C
+                    }
+                    else if (b==2){
+                        data_C = data_0_2_C
+                    }
+                    else if (b==3){
+                        data_C = data_0_3_C
+                    }
+                }
+                else if (a==1){
+                    if (b==0){
+                        data_C = data_1_0_C;
+                    }
+                    else if (b==1){
+                        data_C = data_1_1_C
+                    }
+                }
+                else if (a==2){
+                    if (b==0){
+                        data_C = data_2_0_C;
+                    }
+                    else if (b==1){
+                        data_C = data_2_1_C
+                    }
+                    else if (b==2){
+                        data_C = data_2_2_C
+                    }
+                }
+                else if (a==3){
+                    if (b==0){
+                        data_C = data_3_0_C;
+                    }
+                    else if (b==1){
+                        data_C = data_3_1_C
+                    }
+                }
+                else if (a==4){
+                    if (b==0){
+                        data_C = data_4_0_C;
+                    }
+                    else if (b==1){
+                        data_C = data_4_1_C
+                    }
+                    else if (b==2){
+                        data_C = data_4_2_C
+                    }
+                }
+
+                for (var i=0; i<data_C.length; i++){
+                    var opt = document.createElement("option");
+                    opt.value = i;
+                    opt.innerText = data_C[i];
+                    list_C.options.add(opt);
+                }
+            }
+
+
+            ListAChange();
+
+
+
+
+        }
+
+
+
+
+
+    </script>
+
+    <script>
+        $(function (){
+        $("[data-toggle='popover']").popover();
+        });
+    </script>
+
+    <script type="text/javascript">
+
+        $(function() {
+            $("#submit_plus .btn").click(function(){
+                $(this).button('loading').delay(1000).queue(function() {
+                });
+            });
+        });
+
+    </script>
+
+{% endblock %}

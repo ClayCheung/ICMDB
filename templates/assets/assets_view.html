@@ -1,0 +1,243 @@
+{% extends 'base/base_operate.html' %}
+{% load staticfiles %}
+{% block title %}资产信息导入{% endblock %}
+
+{% block css %}{% endblock %}
+
+{% block content %}
+
+<form action="/assets/" enctype="multipart/form-data" method="post">
+    {% csrf_token %}
+    <section class="content">
+      <div class="alert alert-info alert-dismissible">
+        <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+        <h4><i class="icon fa fa-info"></i> 注意 !</h4>
+        * 创建项目并导入信息<br>
+        * 或者选择已有项目，查看项目资产
+      </div>
+
+
+{#      <div class="alert alert-info alert-dismissible">#}
+{#                <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>#}
+{#                <h4><i class="icon fa fa-info"></i> Alert!</h4>#}
+{#                Info alert preview. This alert is dismissable.#}
+{#              </div>#}
+
+
+      <div class="row">
+        <div class="col-xs-12">
+          <div class="box box-default">
+            <div class="box-header with-border">
+              <h3 class="box-title">创建项目</h3>
+            </div>
+            <div class="box-body">
+              <button type="button" class="btn btn-info" data-toggle="modal" data-target="#modal-info">
+                创建项目
+              </button>
+            </div>
+            <div class="box-header with-border">
+              <h3 class="box-title">选择已有项目</h3>
+            </div>
+            <div class="box-body">
+                <div class="col-sm-5">
+                     <select name="exist_project" id="exist_project" class="form-control select2 select2-hidden-accessible" style="width: 100%;" tabindex="-1" aria-hidden="true">
+                     </select>
+                </div>
+              <button type="submit" name="submit_viewProject" class="btn btn-warning" >
+                查看项目资产
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+
+
+        <div class="modal fade" id="modal-info" style="display: none;">
+          <div class="modal-dialog">
+            <div class="modal-content">
+              <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                  <span aria-hidden="true">×</span></button>
+                <h4 class="modal-title">完善项目信息</h4>
+              </div>
+              <div class="modal-body">
+                <div class="nav-tabs-custom">
+                    <ul class="nav nav-tabs">
+                      <li class="active"><a href="#tab_1" data-toggle="tab" aria-expanded="true">项目名</a></li>
+                      <li class=""><a href="#tab_2" data-toggle="tab" aria-expanded="false">其他信息</a></li>
+                      <li class=""><a href="#tab_3" data-toggle="tab" aria-expanded="false">导入布线表</a></li>
+                      <li class=""><a href="#tab_4" data-toggle="tab" aria-expanded="false">导入网络附件信息</a></li>
+                    </ul>
+                    <div class="tab-content">
+                      <div class="tab-pane active" id="tab_1">
+                         <label for="project_name">输入项目名</label>
+                         <input id="project_name" name="project_name"  type="text" class="form-control " width="10" placeholder="项目名">
+                      </div>
+                      <!-- /.tab-pane -->
+                      <div class="tab-pane" id="tab_2">
+                        <label for="project_name">局方项目负责人</label>
+                         <input id="project_administrator" name="project_administrator"  type="text" class="form-control " width="10" placeholder="局方项目负责人">
+
+                        <label for="project_name">业务归属科室</label>
+                         <input id="project_department" name="project_department"  type="text" class="form-control " width="10" placeholder="业务归属科室">
+                        <label for="project_name">项目所属系统</label>
+                         <input id="project_system" name="project_system"  type="text" class="form-control " width="10" placeholder="项目所属系统">
+                        <label for="project_name">项目所属平台</label>
+                         <input id="project_platform" name="project_platform"  type="text" class="form-control " width="10" placeholder="项目所属平台">
+                        <label for="project_name">项目所属模块</label>
+                         <input id="project_module" name="project_module"  type="text" class="form-control " width="10" placeholder="项目所属模块">
+
+                      </div>
+                      <!-- /.tab-pane -->
+                      <div class="tab-pane" id="tab_3">
+                        <input type="file"  class="btn-primary" id="cabletable" name="cabletable">
+                        <p class="help-block">注意：必须是.xlsx格式</p>
+                      </div>
+                      <!-- /.tab-pane -->
+
+                      <div class="tab-pane" id="tab_4">
+                        <input type="file" class="btn-primary" id="netinfo_plus" name="netinfo_plus" >
+                        <p class="help-block">提示：布线表核查时可导出</p>
+                      </div>
+                      <!-- /.tab-pane -->
+
+                    </div>
+                    <!-- /.tab-content -->
+                 </div>
+              </div>
+              <div class="modal-footer">
+                <button type="button" class="btn btn-default pull-left" data-dismiss="modal">关闭</button>
+                <button type="submit" name="submit_projectInfo" class="btn btn-primary">提交并创建</button>
+              </div>
+            </div>
+            <!-- /.modal-content -->
+          </div>
+          <!-- /.modal-dialog -->
+        </div>
+        <!-- /.modal -->
+
+
+
+
+    </section>
+</form>
+
+    <section class="content">
+      <div class="row">
+        <div class="col-xs-12">
+          <div class="box">
+            <div class="box-header">
+              <h3 class="box-title">{{ cabletableFile.project.name }}-全资产总览</h3>
+            </div>
+            <!-- /.box-header -->
+            <div class="box-body">
+              <table id="example1" class="table table-bordered table-striped">
+                <thead>
+                <tr>
+                  <th>资产名称</th>
+                  <th>机柜号</th>
+                  <th>资产类型</th>
+                  <th>设备厂家</th>
+                  <th>设备型号</th>
+                </tr>
+                </thead>
+                <tbody>
+                {% for dev in netDevObjList %}
+                    <tr>
+                      <td>{{ dev.asset.name }}</td>
+                      <td>{{ dev.asset.locate.cabinet }}{{ dev.asset.locate.cabinet_num }}</td>
+                      <td>{{ dev.get_sub_asset_type_display }}</td>
+                      <td>{{ dev.asset.vender }}</td>
+                      <td>{{ dev.asset.model }}</td>
+                    </tr>
+                {% endfor %}
+                {% for dev in serverDevObjList %}
+                    <tr>
+                      <td>{{ dev.asset.name }}</td>
+                      <td>{{ dev.asset.locate.cabinet }}{{ dev.asset.locate.cabinet_num }}</td>
+                      <td>{{ dev.asset.asset_type }}</td>
+                      <td>{{ dev.asset.vender }}</td>
+                      <td>{{ dev.asset.model }}</td>
+                    </tr>
+                {% endfor %}
+                {% for dev in storDevObjList %}
+                    <tr>
+                      <td>{{ dev.asset.name }}</td>
+                      <td>{{ dev.asset.locate.cabinet }}{{ dev.asset.locate.cabinet_num }}</td>
+                      <td>{{ dev.asset.asset_type }}</td>
+                      <td>{{ dev.asset.vender }}</td>
+                      <td>{{ dev.asset.model }}</td>
+                    </tr>
+                {% endfor %}
+
+
+                </tbody>
+                <tfoot>
+                <tr>
+                  <th>资产名称</th>
+                  <th>机柜号</th>
+                  <th>资产类型</th>
+                  <th>设备厂家</th>
+                  <th>设备型号</th>
+                </tr>
+                </tfoot>
+              </table>
+              </div>
+              </div>
+
+            </div>
+            <!-- /.box-body -->
+      </div>
+    </section>
+
+
+{% endblock %}
+
+{% block script %}
+
+    <!-- FastClick -->
+    <script src="{% static 'bower_components/fastclick/lib/fastclick.js' %}"></script>
+    <!-- Select2 -->
+    <script src="{% static 'bower_components/select2/dist/js/select2.full.min.js' %}"></script>
+    <!-- DataTables -->
+    <script src="{% static 'bower_components/datatables.net/js/jquery.dataTables.min.js' %}"></script>
+    <script src="{% static 'bower_components/datatables.net-bs/js/dataTables.bootstrap.min.js' %}"></script>
+    <!-- SlimScroll -->
+    <script src="{% static 'bower_components/jquery-slimscroll/jquery.slimscroll.min.js' %}"></script>
+
+
+    <script>
+      $(function () {
+          $('#example1').DataTable()
+
+      })
+    </script>
+
+
+    <script>
+       $(function () { $('#modal-info').modal('hide')});
+    </script>
+    <script>
+       $(function () { $('#modal-info').on('hide.bs.modal', function () {
+          alert('项目未提交，填写的信息会留存...');})
+       });
+    </script>
+
+
+
+    <script>
+
+        var data_A = {{ project_name_list|safe }};
+        var project_list = document.getElementById("exist_project");
+
+        project_list.options.length = 0;
+            for (var i=0; i<data_A.length; i++){
+                var opt = document.createElement("option");
+                opt.value = i;
+                opt.innerText = data_A[i];
+                project_list.options.add(opt);
+            }
+
+    </script>
+{% endblock %}

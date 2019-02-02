@@ -1,0 +1,288 @@
+{% extends 'base/base_office.html' %}
+{% load staticfiles %}
+{% block title %}ICMDB | 工单详情 {% endblock %}
+
+{% block css %}{% endblock %}
+
+{% block content %}
+    <section class="content container-fluid">
+    <div class="col-md-3">
+        <div class="box box-primary">
+                <div class="box-header with-border">
+                  <h3 class="box-title">申请人信息</h3>
+
+                  <div class="box-tools">
+                    <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
+                    </button>
+                  </div>
+                </div>
+                <div class="box-body no-padding">
+                  <ul class="nav nav-pills nav-stacked">
+                      <li><a href="#" title="联系人"><i class="fa fa-user"></i>{{ wo.sponsor }}</a></li>
+                    <li><a href="#" title="电话"><i class="fa fa-phone"></i>{{ wo.sponsor }}</a></li>
+                    <li><a href="#" title="邮箱"><i class="fa fa-envelope" ></i>{{ wo.sponsor.email }}</a></li>
+                  </ul>
+                </div>
+                <!-- /.box-body -->
+              </div>
+
+        <div class="box box-primary">
+            <div class="box-header with-border">
+              <h3 class="box-title">接单人信息</h3>
+
+              <div class="box-tools">
+                <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
+                </button>
+              </div>
+            </div>
+            <div class="box-body no-padding">
+              <ul class="nav nav-pills nav-stacked">
+                  <li><a href="#" title="联系人"><i class="fa fa-user"></i>{{ wo.executor }}</a></li>
+                <li><a href="#" title="电话"><i class="fa fa-phone"></i>{{ wo.executor }}</a></li>
+                <li><a href="#" title="邮箱"><i class="fa fa-envelope" ></i>{{ wo.executor.email }}</a></li>
+              </ul>
+            </div>
+            <!-- /.box-body -->
+          </div>
+    </div>
+    <div class="col-md-9">
+        <div class="box box-primary">
+            <div class="box-header with-border">
+              <h3 class="box-title">工单详情</h3>
+              <div class="box-tools">
+                <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
+                </button>
+              </div>
+            </div>
+         <div class="box-body no-padding">
+           <div class="mailbox-controls margin-b-10">
+            <div class="btn-group margin-l-5">
+                {% if wo.executor == request.user %}
+
+                  {% if wo.o_state == 2 %}
+                      <button type="button" class="btn btn-danger btn-sm" title="退回工单" id="btnWorkListReturn"
+                              onclick="doReturn({{ wo.id }})">
+                          <i class="fa fa-undo"> 退回工单</i>
+                      </button>
+                      <button type="button" class="btn btn-primary btn-sm" title="接单" id="btnWorkListHandle"
+                            onclick="doHandle({{ wo.id }})">
+                          <i class="glyphicon glyphicon-play"> 接单</i>
+                      </button>
+
+
+                  {% elif wo.o_state == 3 %}
+
+                      <button type="button" class="btn btn-instagram btn-sm" title="接单" id="btnWorkListExecuted"
+                            onclick="doExecuted({{ wo.id }})">
+                          <i class="glyphicon glyphicon-play"> 确认执行完成</i>
+                      </button>
+
+                  {% endif %}
+
+
+
+                {% endif %}
+
+
+
+
+            </div>
+            <div class="btn-group pull-right">
+                {% if wo.attachment %}
+                    <a class="btn btn-block btn-social btn-google" onclick="doDownload({{ wo.id }})"
+                    href="/media/{{ wo.attachment }}" download="{{ wo_attaName }}">
+                      <i class="fa fa-cloud-download"></i> {{ wo_attaName }}
+                    </a>
+                {% endif %}
+
+            </div>
+           </div>
+
+           <form class="form-horizontal" id="WorkListDetailsForm" action="" method="post">
+                {% csrf_token %}
+                <div class="table-responsive mailbox-messages">
+                  <table class="table" id="tbWorkList"  style="white-space: nowrap;">
+                    <tbody>
+                        <tr class="warning">
+                            <td><strong> 工单号</strong></td>
+                            <td>{{ wo.workOrder_num.num }}</td>
+
+                        </tr>
+                        <tr>
+                            <td><strong> 标题</strong></td>
+                            <td>{{ wo.title }}</td>
+
+                        </tr>
+                        <tr class="warning">
+                            <td><strong> 工单类型</strong></td>
+                            <td>{{ wo.get_o_type_display }}</td>
+
+                        </tr>
+                        <tr>
+                            <td><strong> 所属项目</strong></td>
+                            <td>{{ wo.project }}</td>
+
+                        </tr>
+                        <tr class="warning">
+                            <td><strong> 发起日期 : </strong></td>
+                            <td>{{ wo.workOrder_num.c_time }}</td>
+
+                        </tr>
+                        <tr>
+                            <td><strong> DeadLine</strong></td>
+                            <td>{{ wo.deadLine }}</td>
+
+                        </tr>
+                        <tr class="warning">
+                            <td><strong> 审批人</strong></td>
+                            <td>{{ wo.approver }}</td>
+
+                        </tr>
+                        <tr>
+                            <td><strong> 工单内容</strong></td>
+                            <td>
+                                <div class="col-md-12">
+                                  <div class="box box-default">
+
+                                    <div class="box-body pad">
+                                            <textarea id="workorder_content" name="workorder_content" >
+                                                            {{ wo.content }}
+                                            </textarea>
+                                    </div>
+                                  </div>
+                                  <!-- /.box -->
+                                </div>
+                            </td>
+
+                        </tr>
+                    </tbody>
+                  </table>
+                </div>
+                <div class="box-footer ">
+
+                </div>
+              </form>
+            </div>
+            <!-- /.box-body -->
+          </div>
+    </div>
+    </section>
+
+{% endblock %}
+
+{% block script %}
+
+<!-- Layer v3.1.1 -->
+<script src="{% static 'layer/layer.js' %}"></script>
+<!-- CK Editor -->
+<script src="{% static 'bower_components/ckeditor/ckeditor.js'%}"></script>
+
+<script>
+  $(function () {
+    // Replace the <textarea id="workorder_content"> with a CKEditor
+    // instance, using default configuration.
+    CKEDITOR.replace('workorder_content',
+    {
+             toolbar :
+             [
+                //加粗     斜体，     下划线      穿过线      下标字        上标字
+                ['Bold','Italic','Underline','Strike','Subscript','Superscript'],
+                // 数字列表          实体列表            减小缩进    增大缩进
+                ['NumberedList','BulletedList','-','Outdent','Indent'],
+                //左对 齐             居中对齐          右对齐          两端对齐
+                ['JustifyLeft','JustifyCenter','JustifyRight','JustifyBlock'],
+                //超链接  取消超链接
+                ['Link','Unlink'],
+                //图片    flash    表格       水平线            表情       特殊字符        分页符
+                ['Flash','Table','HorizontalRule','Smiley','SpecialChar','PageBreak'],
+                // 样式       格式      字体    字体大小
+                ['Styles','Format','Font','FontSize'],
+                //文本颜色     背景颜色
+                ['TextColor','BGColor'],
+                //全屏           显示区块
+                ['Maximize', 'ShowBlocks','-']
+             ]
+        }
+    );
+
+  })
+</script>
+
+<script>
+
+
+function doReturn(id) {
+    console.log(id);
+    layer.msg('确定要退回工单吗？', {
+        time: 0 //不自动关闭
+        ,btn: ['确定', '再想想']
+        ,yes: function(index) {
+
+            layer.close(index);
+
+            $.ajax({
+                type: "POST",
+                url : "/workorder/return/",
+                data : {"id":id, csrfmiddlewaretoken: '{{ csrf_token }}'},  //防止post数据时报 csrf_token 403
+                cache: false,
+            });
+            },
+        end : function() {
+            //oDataTable.ajax.reload();
+            window.location.href="{% url 'workOrder:executor' %}";
+        }
+    });
+}
+
+
+function doHandle(id) {
+    console.log(id);
+    layer.msg('确认接单吗？', {
+        time: 0 //不自动关闭
+        ,btn: ['确定', '取消']
+        ,yes: function(index) {
+
+            layer.close(index);
+
+            $.ajax({
+                type: "POST",
+                url : "/workorder/handle/",
+                data : {"id":id, csrfmiddlewaretoken: '{{ csrf_token }}'},  //防止post数据时报 csrf_token 403
+                cache: false,
+            });
+            },
+        end : function() {
+            //oDataTable.ajax.reload();
+            window.location.href="{% url 'workOrder:executor' %}";
+        }
+    });
+}
+
+
+function doExecuted(id) {
+    console.log(id);
+    layer.msg('确认已执行了吗？', {
+        time: 0 //不自动关闭
+        ,btn: ['确定', '取消']
+        ,yes: function(index) {
+
+            layer.close(index);
+
+            $.ajax({
+                type: "POST",
+                url : "/workorder/executed/",
+                data : {"id":id, csrfmiddlewaretoken: '{{ csrf_token }}'},  //防止post数据时报 csrf_token 403
+                cache: false,
+            });
+            },
+        end : function() {
+            //oDataTable.ajax.reload();
+            window.location.href="{% url 'workOrder:executor' %}";
+        }
+    });
+}
+
+
+</script>
+
+{% endblock %}

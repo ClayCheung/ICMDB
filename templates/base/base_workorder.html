@@ -1,0 +1,143 @@
+{% load staticfiles %}
+<!DOCTYPE html>
+<html>
+    <head>
+      <meta charset="utf-8">
+      <meta http-equiv="X-UA-Compatible" content="IE=edge">
+      <title>AdminLTE 2 | Advanced form elements</title>
+      <!-- Tell the browser to be responsive to screen width -->
+      <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
+
+      <link rel="stylesheet" href="{% static 'bower_components/bootstrap/dist/css/bootstrap.min.css' %}">
+      <!-- Font Awesome -->
+      <link rel="stylesheet" href="{% static 'bower_components/font-awesome/css/font-awesome.min.css' %}">
+      <!-- Ionicons -->
+      <link rel="stylesheet" href="{% static 'bower_components/Ionicons/css/ionicons.min.css' %}">
+      <!-- Theme style -->
+      <link rel="stylesheet" href="{% static 'dist/css/AdminLTE.min.css' %}">
+
+      <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+      <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+
+    </head>
+
+{% block head %}
+{% endblock %}
+
+
+{% block content %}
+
+
+
+
+
+
+{% endblock %}
+
+
+
+
+
+<!-- jQuery 3 -->
+<script src="{% static 'bower_components/jquery/dist/jquery.min.js' %}"></script>
+<!-- Bootstrap 3.3.7 -->
+<script src="{% static 'bower_components/bootstrap/dist/js/bootstrap.min.js' %}"></script>
+<!-- AdminLTE App -->
+<script src="{% static 'dist/js/adminlte.min.js' %}"></script>
+<!-- CK Editor -->
+<script src="{% static 'bower_components/ckeditor/ckeditor.js'%}"></script>
+<!-- DateTimePicker -->
+<script src="{% static 'bower_components/bootstrap/js/bootstrap-datetimepicker.js' %}"></script>
+{% block script %}
+
+
+
+<script>
+
+
+function doReturn(id) {
+    console.log(id);
+    layer.msg('确定要退回工单吗？', {
+        time: 0 //不自动关闭
+        ,btn: ['确定', '再想想']
+        ,yes: function(index) {
+
+            layer.close(index);
+
+            $.ajax({
+                type: "POST",
+                url : "/workorder/return/",
+                data : {"id":id, csrfmiddlewaretoken: '{{ csrf_token }}'},  //防止post数据时报 csrf_token 403
+                cache: false,
+            });
+            },
+        end : function() {
+            //oDataTable.ajax.reload();
+            window.location.href="{% url 'workOrder:executor' %}";
+        }
+    });
+}
+
+
+function doHandle(id) {
+    console.log(id);
+    layer.msg('确认接单吗？', {
+        time: 0 //不自动关闭
+        ,btn: ['确定', '取消']
+        ,yes: function(index) {
+
+            layer.close(index);
+
+            $.ajax({
+                type: "POST",
+                url : "/workorder/handle/",
+                data : {"id":id, csrfmiddlewaretoken: '{{ csrf_token }}'},  //防止post数据时报 csrf_token 403
+                cache: false,
+            });
+            },
+        end : function() {
+            //oDataTable.ajax.reload();
+            window.location.href="{% url 'workOrder:executor' %}";
+        }
+    });
+}
+
+
+function doExecuted(id) {
+    console.log(id);
+    layer.msg('确认已执行了吗？', {
+        time: 0 //不自动关闭
+        ,btn: ['确定', '取消']
+        ,yes: function(index) {
+
+            layer.close(index);
+
+            $.ajax({
+                type: "POST",
+                url : "/workorder/executed/",
+                data : {"id":id, csrfmiddlewaretoken: '{{ csrf_token }}'},  //防止post数据时报 csrf_token 403
+                cache: false,
+            });
+            },
+        end : function() {
+            //oDataTable.ajax.reload();
+            window.location.href="{% url 'workOrder:executor' %}";
+        }
+    });
+}
+
+function doDownload(id) {
+    console.log(id);
+    $.ajax({
+        type: "POST",
+        url: "/workorder/download/",
+        data: {"id": id, csrfmiddlewaretoken: '{{ csrf_token }}'},
+        cache: false,
+    });
+}
+</script>
+
+
+
+{% endblock %}
+

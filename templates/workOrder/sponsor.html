@@ -1,0 +1,468 @@
+{% extends 'base/base_office.html' %}
+{% load staticfiles %}
+{% block title %}ICMDB | 我发起的工单{% endblock %}
+
+{% block css %}{% endblock %}
+
+{% block content %}
+    <!-- Content Header (Page header) -->
+    <section class="content-header">
+        <div class="col-xs-2">
+            <button type="button" id="parentIframe" class="btn btn-block btn-info ">创建工单</button>
+        </div>
+    </section>
+
+    <!-- Main content -->
+    <section class="content container-fluid">
+
+      <!--------------------------
+        | Your Page Content Here |
+        -------------------------->
+        <br><br>
+       <div class="box box-success box-solid ">
+            <div class="box-header with-border">
+              <h3 class="box-title">已保存的工单</h3>
+
+              <div class="box-tools pull-right">
+                <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
+                </button>
+              </div>
+              <!-- /.box-tools -->
+            </div>
+            <!-- /.box-header -->
+            <div class="box-body">
+               <div class="box-body">
+              <table id="saved_workorder_table" class="table table-bordered table-striped">
+                <thead>
+                <tr>
+                  <th >工单号</th>
+                  <th >标题</th>
+                  <th>所属项目</th>
+                  <th>工单类型</th>
+                  <th>工单状态</th>
+                  <th>发起时间</th>
+                  <th>发起人</th>
+                  <th>操作</th>
+                </tr>
+                </thead>
+                <tbody>
+                {% for wo in saved_wo_set %}
+                    <tr>
+                      <td>{{ wo.workOrder_num.num }}</td>
+                      <td>{{ wo.title }}</td>
+                      <td>{{ wo.project }}</td>
+                      <td>{{ wo.get_o_type_display }}</td>
+                      <td>
+                      {% if wo.o_state == 0 %}
+                          <button type="button" class="btn btn-success btn-xs">{{ wo.get_o_state_display }}</button>
+                      {% elif wo.o_state == 1 %}
+                          <button type="button" class="btn btn-warning btn-xs">{{ wo.get_o_state_display }}</button>
+                      {% elif wo.o_state == 2 %}
+                          <button type="button" class="btn btn-warning btn-xs">{{ wo.get_o_state_display }}</button>
+                      {% elif wo.o_state == 3 %}
+                          <button type="button" class="btn btn-danger btn-xs">{{ wo.get_o_state_display }}</button>
+                      {% elif wo.o_state == 4 %}
+                          <button type="button" class="btn bg-maroon-active btn-xs">{{ wo.get_o_state_display }}</button>
+                      {% elif wo.o_state == 5 %}
+                          <button type="button" class="btn bg-maroon-active btn-xs">{{ wo.get_o_state_display }}</button>
+                      {% elif wo.o_state == 6 %}
+                          <button type="button" class="btn btn-danger btn-xs">{{ wo.get_o_state_display }}</button>
+                      {% elif wo.o_state == 7 %}
+                          <button type="button" class="btn bg-black-active btn-xs">{{ wo.get_o_state_display }}</button>
+                      {% endif %}
+
+                      </td>
+                      <td>{{ wo.workOrder_num.c_time }}</td>
+                      <td>{{ wo.sponsor }}</td>
+                      <td>
+                        {% if wo.o_state == 0 %}   {# 已保存工单 #}
+                            {% if wo.sponsor == request.user %}
+                                <button title="编辑" onclick="doEdit({{ wo.id }})"><i class="glyphicon glyphicon-list-alt"></i></button>
+                                <button title="删除" onclick="doDelete({{ wo.workOrder_num.id }})"><i class="glyphicon glyphicon-trash"></i></button>
+                            {% endif %}
+                        {% elif wo.o_state == 1 or wo.o_state == 4 %}   {# 待审核 或 待重审 工单 #}
+                            {% if wo.approver == request.user %}
+                                <button title="审核" onclick="doApprove({{ wo.id }})"><i class="glyphicon glyphicon-list-alt"></i></button>
+                                <button title="直接通过" onclick="doPass({{ wo.id }})"><i class="glyphicon glyphicon-edit"></i></button>
+                            {% endif %}
+                        {% elif wo.o_state == 2 %}   {# 待接单 的 工单 #}
+
+                            <button title="工单详情" onclick="doDetail({{ wo.id }})"><i class="glyphicon glyphicon-list-alt"></i></button>
+                            {% if wo.executor == request.user %}
+                                <button title="直接接单" onclick="doHandle({{ wo.id }})"><i class="glyphicon glyphicon-hand-left"></i></button>
+                            {% endif %}
+
+                        {% endif %}
+
+                      </td>
+                    </tr>
+                {% endfor %}
+
+
+
+                </tbody>
+                <tfoot>
+                <tr>
+                  <th>工单号</th>
+                  <th>标题</th>
+                  <th>所属项目</th>
+                  <th>工单类型</th>
+                  <th>工单状态</th>
+                  <th>发起时间</th>
+                  <th>发起人</th>
+                  <th>操作</th>
+                </tr>
+                </tfoot>
+              </table>
+              </div>
+
+            </div>
+            <!-- /.box-body -->
+          </div>
+
+       <div class="box box-success box-solid ">
+            <div class="box-header with-border">
+              <h3 class="box-title">待我操作</h3>
+
+              <div class="box-tools pull-right">
+                <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
+                </button>
+              </div>
+              <!-- /.box-tools -->
+            </div>
+            <!-- /.box-header -->
+            <div class="box-body">
+               <div class="box-body">
+              <table id="table_2" class="table table-bordered table-striped">
+                <thead>
+                <tr>
+                  <th >工单号</th>
+                  <th >标题</th>
+                  <th>所属项目</th>
+                  <th>工单类型</th>
+                  <th>工单状态</th>
+                  <th>发起时间</th>
+                  <th>发起人</th>
+                  <th>操作</th>
+                </tr>
+                </thead>
+                <tbody>
+
+                {% for wo in executed_confirm_set %}
+                    <tr>
+                      <td>{{ wo.workOrder_num.num }}</td>
+                      <td>{{ wo.title }}</td>
+                      <td>{{ wo.project }}</td>
+                      <td>{{ wo.get_o_type_display }}</td>
+                      <td>
+                      {% if wo.o_state == 0 %}
+                          <button type="button" class="btn btn-success btn-xs">{{ wo.get_o_state_display }}</button>
+                      {% elif wo.o_state == 1 %}
+                          <button type="button" class="btn btn-warning btn-xs">{{ wo.get_o_state_display }}</button>
+                      {% elif wo.o_state == 2 %}
+                          <button type="button" class="btn btn-warning btn-xs">{{ wo.get_o_state_display }}</button>
+                      {% elif wo.o_state == 3 %}
+                          <button type="button" class="btn btn-danger btn-xs">{{ wo.get_o_state_display }}</button>
+                      {% elif wo.o_state == 4 %}
+                          <button type="button" class="btn bg-maroon-active btn-xs">{{ wo.get_o_state_display }}</button>
+                      {% elif wo.o_state == 5 %}
+                          <button type="button" class="btn bg-maroon-active btn-xs">{{ wo.get_o_state_display }}</button>
+                      {% elif wo.o_state == 6 %}
+                          <button type="button" class="btn btn-danger btn-xs">{{ wo.get_o_state_display }}</button>
+                      {% elif wo.o_state == 7 %}
+                          <button type="button" class="btn bg-black-active btn-xs">{{ wo.get_o_state_display }}</button>
+                      {% endif %}
+
+                      </td>
+                      <td>{{ wo.workOrder_num.c_time }}</td>
+                      <td>{{ wo.sponsor }}</td>
+                      <td>
+                        {% if wo.o_state == 0 %}   {# 已保存工单 #}
+                            {% if wo.sponsor == request.user %}
+                                <button title="编辑" onclick="doEdit({{ wo.id }})"><i class="glyphicon glyphicon-list-alt"></i></button>
+                                <button title="删除" onclick="doDelete({{ wo.workOrder_num.id }})"><i class="glyphicon glyphicon-trash"></i></button>
+                            {% endif %}
+                        {% elif wo.o_state == 1 or wo.o_state == 4 %}   {# 待审核 或 待重审 工单 #}
+                            {% if wo.approver == request.user %}
+                                <button title="审核" onclick="doApprove({{ wo.id }})"><i class="glyphicon glyphicon-list-alt"></i></button>
+                                <button title="直接通过" onclick="doPass({{ wo.id }})"><i class="glyphicon glyphicon-edit"></i></button>
+                            {% endif %}
+                        {% elif wo.o_state == 2 %}   {# 待接单 的 工单 #}
+
+                            <button title="工单详情" onclick="doDetail({{ wo.id }})"><i class="glyphicon glyphicon-list-alt"></i></button>
+                            {% if wo.executor == request.user %}
+                                <button title="直接接单" onclick="doHandle({{ wo.id }})"><i class="glyphicon glyphicon-hand-left"></i></button>
+                            {% endif %}
+
+                        {% endif %}
+
+                      </td>
+                    </tr>
+                {% endfor %}
+
+
+                </tbody>
+                <tfoot>
+                <tr>
+                  <th>工单号</th>
+                  <th>标题</th>
+                  <th>所属项目</th>
+                  <th>工单类型</th>
+                  <th>工单状态</th>
+                  <th>发起时间</th>
+                  <th>发起人</th>
+                  <th>操作</th>
+                </tr>
+                </tfoot>
+              </table>
+              </div>
+
+            </div>
+            <!-- /.box-body -->
+          </div>
+
+       <div class="box box-success box-solid ">
+            <div class="box-header with-border">
+              <h3 class="box-title">我发起的工单</h3>
+
+              <div class="box-tools pull-right">
+                <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
+                </button>
+              </div>
+              <!-- /.box-tools -->
+            </div>
+            <!-- /.box-header -->
+            <div class="box-body">
+               <div class="box-body">
+              <table id="table_3" class="table table-bordered table-striped">
+                <thead>
+                <tr>
+                  <th >工单号</th>
+                  <th >标题</th>
+                  <th>所属项目</th>
+                  <th>工单类型</th>
+                  <th>工单状态</th>
+                  <th>发起时间</th>
+                  <th>发起人</th>
+                  <th>操作</th>
+                </tr>
+                </thead>
+                <tbody>
+                {% for wo in iSend_wo_set %}
+                    <tr>
+                      <td>{{ wo.workOrder_num.num }}</td>
+                      <td>{{ wo.title }}</td>
+                      <td>{{ wo.project }}</td>
+                      <td>{{ wo.get_o_type_display }}</td>
+                      <td>
+                      {% if wo.o_state == 0 %}
+                          <button type="button" class="btn btn-success btn-xs">{{ wo.get_o_state_display }}</button>
+                      {% elif wo.o_state == 1 %}
+                          <button type="button" class="btn btn-warning btn-xs">{{ wo.get_o_state_display }}</button>
+                      {% elif wo.o_state == 2 %}
+                          <button type="button" class="btn btn-warning btn-xs">{{ wo.get_o_state_display }}</button>
+                      {% elif wo.o_state == 3 %}
+                          <button type="button" class="btn btn-danger btn-xs">{{ wo.get_o_state_display }}</button>
+                      {% elif wo.o_state == 4 %}
+                          <button type="button" class="btn bg-maroon-active btn-xs">{{ wo.get_o_state_display }}</button>
+                      {% elif wo.o_state == 5 %}
+                          <button type="button" class="btn bg-maroon-active btn-xs">{{ wo.get_o_state_display }}</button>
+                      {% elif wo.o_state == 6 %}
+                          <button type="button" class="btn btn-danger btn-xs">{{ wo.get_o_state_display }}</button>
+                      {% elif wo.o_state == 7 %}
+                          <button type="button" class="btn bg-black-active btn-xs">{{ wo.get_o_state_display }}</button>
+                      {% endif %}
+
+                      </td>
+                      <td>{{ wo.workOrder_num.c_time }}</td>
+                      <td>{{ wo.sponsor }}</td>
+                      <td>
+                        {% if wo.o_state == 0 %}   {# 已保存工单 #}
+                            {% if wo.sponsor == request.user %}
+                                <button title="编辑" onclick="doEdit({{ wo.id }})"><i class="glyphicon glyphicon-list-alt"></i></button>
+                                <button title="删除" onclick="doDelete({{ wo.workOrder_num.id }})"><i class="glyphicon glyphicon-trash"></i></button>
+                            {% endif %}
+                        {% elif wo.o_state == 1 or wo.o_state == 4 %}   {# 待审核 或 待重审 工单 #}
+                            {% if wo.approver == request.user %}
+                                <button title="审核" onclick="doApprove({{ wo.id }})"><i class="glyphicon glyphicon-list-alt"></i></button>
+                                <button title="直接通过" onclick="doPass({{ wo.id }})"><i class="glyphicon glyphicon-edit"></i></button>
+                            {% endif %}
+                        {% elif wo.o_state == 2 %}   {# 待接单 的 工单 #}
+
+                            <button title="工单详情" onclick="doDetail({{ wo.id }})"><i class="glyphicon glyphicon-list-alt"></i></button>
+                            {% if wo.executor == request.user %}
+                                <button title="直接接单" onclick="doHandle({{ wo.id }})"><i class="glyphicon glyphicon-hand-left"></i></button>
+                            {% endif %}
+
+                        {% endif %}
+                      </td>
+                    </tr>
+                {% endfor %}
+
+
+
+                </tbody>
+                <tfoot>
+                <tr>
+                  <th>工单号</th>
+                  <th>标题</th>
+                  <th>所属项目</th>
+                  <th>工单类型</th>
+                  <th>工单状态</th>
+                  <th>发起时间</th>
+                  <th>发起人</th>
+                  <th>操作</th>
+                </tr>
+                </tfoot>
+              </table>
+              </div>
+
+            </div>
+            <!-- /.box-body -->
+          </div>
+
+
+
+
+
+
+    </section>
+    <!-- /.content -->
+{% endblock %}
+
+{% block script %}
+
+    <!-- Layer v3.1.1 -->
+<script src="{% static 'layer/layer.js' %}"></script>
+    <!-- DataTables -->
+<script src="{% static 'bower_components/datatables.net/js/jquery.dataTables.min.js' %}"></script>
+<!-- SlimScroll -->
+<script src="{% static 'bower_components/jquery-slimscroll/jquery.slimscroll.min.js' %}"></script>
+<!-- FastClick -->
+<script src="{% static 'bower_components/fastclick/lib/fastclick.js' %}"></script>
+<!-- AdminLTE for demo purposes -->
+<script src="{% static 'dist/js/demo.js' %}"></script>
+
+<script src="{% static 'bower_components/datatables.net-bs/js/dataTables.bootstrap.min.js' %}"></script>
+
+
+
+    <script>
+
+
+  $(function () {
+      $('#saved_workorder_table').DataTable();
+      $('#table_2').DataTable();
+      $('#table_3').DataTable();
+
+  })
+</script>
+
+<script>
+  $('#parentIframe').on('click', function(){
+    layer.open({
+      type: 2,
+      title: '创建工单',
+      maxmin: true,
+      shadeClose: false, //点击遮罩关闭层
+      area : ['800px' , '600px'],
+      content: '/workorder/create/',
+      end : function() {
+          //oDataTable.ajax.reload();
+          window.location.reload();
+      }
+
+    });
+  });
+
+</script>
+
+<script>
+
+function doEdit(id) {
+    console.log(id);
+    layer.open({
+		type : 2,
+		title : '修改工单',
+		shadeClose : false,
+    	maxmin : true,
+		area : [ '800px', '600px' ],
+		content : [ "/workorder/update/"+'?id='+id],
+		end : function() {
+			//oDataTable.ajax.reload();
+            window.location.reload();
+
+		}
+	});
+    {#layer.full(div)#}
+}
+
+function doDelete(id) {
+    console.log(id);
+    layer.msg('确定要删除吗？', {
+        time: 0 //不自动关闭
+        ,btn: ['确定', '点错']
+        ,yes: function(index) {
+
+            layer.close(index);
+
+            $.ajax({
+                type: "POST",
+                url : "/workorder/delete/",
+                data : {"id":id, csrfmiddlewaretoken: '{{ csrf_token }}'},  //防止post数据时报 csrf_token 403
+                cache: false,
+            });
+            },
+        end : function() {
+            //oDataTable.ajax.reload();
+            window.location.reload();
+        }
+    });
+}
+
+
+function doApprove(id) {
+    console.log(id);
+    layer.open({
+		type : 2,
+		title : '审批工单',
+		shadeClose : false,
+    	maxmin : true,
+		area : [ '800px', '600px' ],
+		content : [ "/workorder/doapprove/"+'?id='+id],
+		end : function() {
+			//oDataTable.ajax.reload();
+            window.location.reload();
+
+		}
+	});
+    {#layer.full(div)#}
+}
+
+function doPass(id) {
+    console.log(id);
+    layer.msg('确定直接审批通过吗？', {
+        time: 0 //不自动关闭
+        ,btn: ['确定', '再看看']
+        ,yes: function(index) {
+
+            layer.close(index);
+
+            $.ajax({
+                type: "POST",
+                url : "/workorder/pass/",
+                data : {"id":id, csrfmiddlewaretoken: '{{ csrf_token }}'},  //防止post数据时报 csrf_token 403
+                cache: false,
+            });
+            },
+        end : function() {
+            //oDataTable.ajax.reload();
+            window.location.reload();
+        }
+    });
+}
+
+
+</script>
+
+{% endblock %}
