@@ -1,0 +1,426 @@
+{% extends 'base/base_office.html' %}
+{% load staticfiles %}
+{% block title %}ICMDB | 工单统计{% endblock %}
+
+{% block css %}{% endblock %}
+
+{% block content %}
+    <!-- Content Header (Page header) -->
+    <section class="content-header">
+      <h1>
+        工单统计
+        <small>Version 1.0</small>
+      </h1>
+      <ol class="breadcrumb">
+        <li><a href="#"><i class="fa fa-dashboard"></i> 行政</a></li>
+        <li class="active">工单统计</li>
+      </ol>
+    </section>
+
+    <!-- Main content -->
+    <section class="content">
+      <!-- Info boxes -->
+      <div class="row">
+        <div class="col-md-3 col-sm-6 col-xs-12">
+          <div class="info-box">
+            <span class="info-box-icon bg-aqua"><i class="fa fa-send"></i></span>
+
+            <div class="info-box-content">
+              <span class="info-box-text">总发起工单</span>
+              <span class="info-box-number">{{ wo_num }}</span>
+            </div>
+            <!-- /.info-box-content -->
+          </div>
+          <!-- /.info-box -->
+        </div>
+        <!-- /.col -->
+        <div class="col-md-3 col-sm-6 col-xs-12">
+          <div class="info-box">
+            <span class="info-box-icon bg-red"><i class="fa fa-gavel"></i></span>
+
+            <div class="info-box-content">
+              <span class="info-box-text">总审核工单</span>
+              <span class="info-box-number">{{ wo_approve_num }}</span>
+            </div>
+            <!-- /.info-box-content -->
+          </div>
+          <!-- /.info-box -->
+        </div>
+        <!-- /.col -->
+
+        <!-- fix for small devices only -->
+        <div class="clearfix visible-sm-block"></div>
+
+        <div class="col-md-3 col-sm-6 col-xs-12">
+          <div class="info-box">
+            <span class="info-box-icon bg-green"><i class="fa fa-check-square-o"></i></span>
+
+            <div class="info-box-content">
+              <span class="info-box-text">已完成工单</span>
+              <span class="info-box-number">{{ done_num }}</span>
+            </div>
+            <!-- /.info-box-content -->
+          </div>
+          <!-- /.info-box -->
+        </div>
+        <!-- /.col -->
+        <div class="col-md-3 col-sm-6 col-xs-12">
+          <div class="info-box">
+            <span class="info-box-icon bg-yellow"><i class="ion ion-ios-people-outline"></i></span>
+
+            <div class="info-box-content">
+              <span class="info-box-text">成员</span>
+              <span class="info-box-number">{{ member.count |add:-1 }}</span>
+            </div>
+            <!-- /.info-box-content -->
+          </div>
+          <!-- /.info-box -->
+        </div>
+        <!-- /.col -->
+      </div>
+      <!-- /.row -->
+
+      <div class="row">
+        <div class="col-md-12">
+          <div class="box">
+            <div class="box-header with-border">
+              <h3 class="box-title">工单统计</h3>
+
+              <div class="box-tools pull-right">
+                <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
+                </button>
+                </div>
+            </div>
+            <!-- /.box-header -->
+            <div class="box-body">
+              <div class="row">
+                <div class="col-md-12">
+                  <div id="echarts_1" style="width: 1200px;height:400px;"></div>
+                  <!-- /.chart-responsive -->
+                </div>
+                <!-- /.col -->
+              </div>
+              <!-- /.row -->
+              <div class="row">
+                <div class="col-md-12">
+                  <div id="echarts_2" style="width: 1200px;height:800px;"></div>
+                  <!-- /.chart-responsive -->
+                </div>
+                <!-- /.col -->
+              </div>
+              <!-- /.row -->
+            </div>
+            <!-- ./box-body -->
+            <div class="box-footer">
+              <div class="row">
+                <div class="col-sm-3 col-xs-6">
+                  <div class="description-block border-right">
+                    <span class="description-percentage text-green"><i class="fa fa-caret-up"></i> 发起最多</span>
+                    <h5 class="description-header">{{ best_sponsor.1 }}</h5>
+                    <span class="description-text">{{ best_sponsor.0 }}</span>
+                  </div>
+                  <!-- /.description-block -->
+                </div>
+                <!-- /.col -->
+                <div class="col-sm-3 col-xs-6">
+                  <div class="description-block border-right">
+                    <span class="description-percentage text-yellow"><i class="fa fa-caret-up"></i> 审核最多</span>
+                    <h5 class="description-header">{{ best_approver.1 }}</h5>
+                    <span class="description-text">{{ best_approver.0 }}</span>
+                  </div>
+                  <!-- /.description-block -->
+                </div>
+                <!-- /.col -->
+                <div class="col-sm-3 col-xs-6">
+                  <div class="description-block border-right">
+                    <span class="description-percentage text-blue"><i class="fa fa-caret-up"></i> 执行最多</span>
+                    <h5 class="description-header">{{ best_executor.1 }}</h5>
+                    <span class="description-text">{{ best_executor.0 }}</span>
+                  </div>
+                  <!-- /.description-block -->
+                </div>
+                <!-- /.col -->
+                <div class="col-sm-3 col-xs-6">
+                  <div class="description-block">
+                    <span class="description-percentage text-red"><i class="fa fa-caret-up"></i> 综合最多</span>
+                    <h5 class="description-header">{{ best_member.1 }}</h5>
+                    <span class="description-text">{{ best_member.0 }}</span>
+                  </div>
+                  <!-- /.description-block -->
+                </div>
+              </div>
+              <!-- /.row -->
+            </div>
+            <!-- /.box-footer -->
+          </div>
+          <!-- /.box -->
+
+          <div class="box box-success box-solid ">
+            <div class="box-header with-border">
+              <h3 class="box-title">追踪工单</h3>
+
+              <div class="box-tools pull-right">
+                <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
+                </button>
+              </div>
+              <!-- /.box-tools -->
+            </div>
+            <div class="box-body">
+              <table id="table_trace" class="table table-bordered table-striped">
+                <thead>
+                <tr>
+                  <th >工单号</th>
+                  <th >标题</th>
+                  <th>所属项目</th>
+                  <th>工单类型</th>
+                  <th>工单状态</th>
+                  <th>发起时间</th>
+                  <th>发起人</th>
+                  <th>执行人</th>
+                </tr>
+                </thead>
+                <tbody>
+                {% for wo in all_wo %}
+                    <tr>
+                      <td>{{ wo.workOrder_num.num }}</td>
+                      <td>{{ wo.title }}</td>
+                      <td>{{ wo.project }}</td>
+                      <td>{{ wo.get_o_type_display }}</td>
+                      <td>
+                      {% if wo.o_state == 0 %}
+                          <button type="button" class="btn btn-success btn-xs">{{ wo.get_o_state_display }}</button>
+                      {% elif wo.o_state == 1 %}
+                          <button type="button" class="btn btn-warning btn-xs" onclick="doTrace({{ wo.workOrder_num.id }})">{{ wo.get_o_state_display }}</button>
+                      {% elif wo.o_state == 2 %}
+                          <button type="button" class="btn bg-purple-gradient btn-xs" onclick="doTrace({{ wo.workOrder_num.id }})">{{ wo.get_o_state_display }}</button>
+                      {% elif wo.o_state == 3 %}
+                          <button type="button" class="btn btn-danger btn-xs" onclick="doTrace({{ wo.workOrder_num.id }})">{{ wo.get_o_state_display }}</button>
+                      {% elif wo.o_state == 4 %}
+                          <button type="button" class="btn bg-maroon-active btn-xs" onclick="doTrace({{ wo.workOrder_num.id }})">{{ wo.get_o_state_display }}</button>
+                      {% elif wo.o_state == 5 %}
+                          <button type="button" class="btn btn-info btn-xs" onclick="doTrace({{ wo.workOrder_num.id }})">{{ wo.get_o_state_display }}</button>
+                      {% elif wo.o_state == 6 %}
+                          <button type="button" class="btn bg-olive-active btn-xs" onclick="doTrace({{ wo.workOrder_num.id }})">{{ wo.get_o_state_display }}</button>
+                      {% elif wo.o_state == 7 %}
+                          <button type="button" class="btn bg-black-active btn-xs" onclick="doTrace({{ wo.workOrder_num.id }})">{{ wo.get_o_state_display }}</button>
+                      {% endif %}
+
+                      </td>
+                      <td>{{ wo.workOrder_num.c_time }}</td>
+                      <td>{{ wo.sponsor }}</td>
+                      <td>{{ wo.executor }}</td>
+                    </tr>
+                {% endfor %}
+
+
+
+                </tbody>
+                <tfoot>
+                <tr>
+                  <th>工单号</th>
+                  <th>标题</th>
+                  <th>所属项目</th>
+                  <th>工单类型</th>
+                  <th>工单状态</th>
+                  <th>发起时间</th>
+                  <th>发起人</th>
+                  <th>执行人</th>
+                </tr>
+                </tfoot>
+              </table>
+            </div>
+          </div>
+            <!-- /.box-header -->
+            <div class="box-body">
+        </div>
+        <!-- /.col -->
+      </div>
+      </div>
+    </section>
+
+
+
+    <!-- Main content -->
+{% endblock %}
+
+{% block script %}
+
+<script src="{% static 'plugins/echarts/echarts.min.js' %}"></script>
+    <!-- Layer v3.1.1 -->
+<script src="{% static 'layer/layer.js' %}"></script>
+    <!-- DataTables -->
+<script src="{% static 'bower_components/datatables.net/js/jquery.dataTables.min.js' %}"></script>
+<!-- SlimScroll -->
+<script src="{% static 'bower_components/jquery-slimscroll/jquery.slimscroll.min.js' %}"></script>
+<!-- FastClick -->
+<script src="{% static 'bower_components/fastclick/lib/fastclick.js' %}"></script>
+<!-- AdminLTE for demo purposes -->
+<script src="{% static 'dist/js/demo.js' %}"></script>
+
+<script src="{% static 'bower_components/datatables.net-bs/js/dataTables.bootstrap.min.js' %}"></script>
+
+
+
+<script type="text/javascript">
+    // 基于准备好的dom，初始化echarts实例
+    var myChart = echarts.init(document.getElementById('echarts_1'));
+
+    // 指定图表的配置项和数据
+    var option = {
+        title: {
+            text: '各类型工单统计',
+        },
+        tooltip: {},
+        legend: {
+            data: ['销量'],
+            left: 'left'
+        },
+        xAxis: {
+            data: {{ o_type |safe }}
+        },
+        yAxis: {},
+        series: [{
+            name: '工单类型',
+            type: 'bar',
+            data: {{ o_type_num |safe }}
+        }]
+    };
+
+    // 使用刚指定的配置项和数据显示图表。
+    myChart.setOption(option);
+
+    // 基于准备好的dom，初始化echarts实例
+    var myChart_2 = echarts.init(document.getElementById('echarts_2'));
+
+    // 指定图表的配置项和数据
+    option = {
+        title: {
+            text: '工单数量统计'
+        },
+        tooltip: {
+            trigger: 'axis'
+        },
+        legend: {
+            data:['发起工单','审批工单','执行工单']
+        },
+        toolbox: {
+            show: true,
+            feature: {
+                dataZoom: {
+                    yAxisIndex: 'none'
+                },
+                dataView: {readOnly: false},
+                magicType: {type: ['line', 'bar']},
+                restore: {},
+                saveAsImage: {}
+            }
+        },
+        xAxis:  {
+            type: 'category',
+            boundaryGap: false,
+            data: {{ mem_list |safe }}
+        },
+        yAxis: {
+            type: 'value',
+            axisLabel: {
+
+            }
+        },
+        series: [
+            {
+                name:'发起工单',
+                type:'line',
+                data: {{ sponsor_series |safe }},
+                markPoint: {
+                    data: [
+                        {type: 'max', name: '最大值'},
+                        {type: 'min', name: '最小值'}
+                    ]
+                },
+                markLine: {
+                    data: [
+                        {type: 'average', name: '平均值'}
+                    ]
+                }
+            },
+
+
+
+            {
+                name:'审批工单',
+                type:'line',
+                data: {{ approver_series |safe }},
+                markPoint: {
+                    data: [
+                        {name: '周最低', value: -2, xAxis: 1, yAxis: -1.5}
+                    ]
+                },
+                markLine: {
+                    data: [
+                        {type: 'average', name: '平均值'},
+                        [{
+                            symbol: 'none',
+                            x: '90%',
+                            yAxis: 'max'
+                        }, {
+                            symbol: 'circle',
+                            label: {
+                                normal: {
+                                    position: 'start',
+                                    formatter: '最大值'
+                                }
+                            },
+                            type: 'max',
+                            name: '最高点'
+                        }]
+                    ]
+                }
+            },
+            {
+                name:'执行工单',
+                type:'line',
+                data: {{ execute_series |safe }},
+                markPoint: {
+                    data: [
+                        {type: 'max', name: '最大值'},
+                        {type: 'min', name: '最小值'}
+                    ]
+                },
+                markLine: {
+                    data: [
+                        {type: 'average', name: '平均值'}
+                    ]
+                }
+            }
+        ]
+    };
+    // 使用刚指定的配置项和数据显示图表。
+    myChart_2.setOption(option);
+
+
+
+function doTrace(id) {
+    console.log(id);
+    layer.open({
+		type : 2,
+		title : '追踪工单',
+		shadeClose : false,
+    	maxmin : true,
+		area : [ '800px', '600px' ],
+		content : [ "/workorder/trace/"+'?id='+id],
+		end : function() {
+			//oDataTable.ajax.reload();
+            window.location.reload();
+
+		}
+	});
+    {#layer.full(div)#}
+}
+
+$(function () {
+      $('#table_trace').DataTable();
+  })
+
+
+</script>
+{% endblock %}

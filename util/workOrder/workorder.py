@@ -17,7 +17,7 @@ def get_lastest_WO_set():
     :return:
     """
     won_set = WorkOrder.objects.filter(id=-1)
-    print('应该是个空集', won_set)
+    # print('应该是个空集', won_set)
     # print('类型应该qset', type(won_set))
     for WON in WorkOrderNum.objects.all():
         # print('在循环：', WON)

@@ -1,0 +1,20 @@
+interface Ten-GigabitEthernet 2/1/23
+description TO_[ZJHZ-DSP-SQ5-3F-K21-HW2288-SDS01]_mgmt_port6
+interface Ten-GigabitEthernet 2/2/20
+description TO_[ZJHZ-DSP-SQ5-3F-K21-HW2288-SDS02]_mgmt_port6
+interface Ten-GigabitEthernet 2/2/21
+description TO_[ZJHZ-DSP-SQ5-3F-K21-HW2288-SDS03]_mgmt_port6
+interface Ten-GigabitEthernet 2/2/22
+description TO_[ZJHZ-DSP-SQ5-3F-K21-HW2288-SDS04]_mgmt_port6
+interface Ten-GigabitEthernet 2/2/23
+description TO_[ZJHZ-DSP-SQ5-3F-K21-HW2288-SDS05]_mgmt_port6
+interface Ten-GigabitEthernet 1/1/23
+description TO_[ZJHZ-DSP-SQ5-3F-K21-HW2288-SDS01]_mgmt_port1
+interface Ten-GigabitEthernet 1/2/20
+description TO_[ZJHZ-DSP-SQ5-3F-K21-HW2288-SDS02]_mgmt_port1
+interface Ten-GigabitEthernet 1/2/21
+description TO_[ZJHZ-DSP-SQ5-3F-K21-HW2288-SDS03]_mgmt_port1
+interface Ten-GigabitEthernet 1/2/22
+description TO_[ZJHZ-DSP-SQ5-3F-K21-HW2288-SDS04]_mgmt_port1
+interface Ten-GigabitEthernet 1/2/23
+description TO_[ZJHZ-DSP-SQ5-3F-K21-HW2288-SDS05]_mgmt_port1

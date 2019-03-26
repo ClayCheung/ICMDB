@@ -19,7 +19,7 @@
                 <div class="box-body no-padding">
                   <ul class="nav nav-pills nav-stacked">
                       <li><a href="#" title="联系人"><i class="fa fa-user"></i>{{ wo.sponsor }}</a></li>
-                    <li><a href="#" title="电话"><i class="fa fa-phone"></i>{{ wo.sponsor }}</a></li>
+                    <li><a href="#" title="电话"><i class="fa fa-phone"></i>{{ wo.sponsor.telephone }}</a></li>
                     <li><a href="#" title="邮箱"><i class="fa fa-envelope" ></i>{{ wo.sponsor.email }}</a></li>
                   </ul>
                 </div>
@@ -38,7 +38,7 @@
             <div class="box-body no-padding">
               <ul class="nav nav-pills nav-stacked">
                   <li><a href="#" title="联系人"><i class="fa fa-user"></i>{{ wo.executor }}</a></li>
-                <li><a href="#" title="电话"><i class="fa fa-phone"></i>{{ wo.executor }}</a></li>
+                <li><a href="#" title="电话"><i class="fa fa-phone"></i>{{ wo.executor.telephone }}</a></li>
                 <li><a href="#" title="邮箱"><i class="fa fa-envelope" ></i>{{ wo.executor.email }}</a></li>
               </ul>
             </div>
@@ -57,31 +57,63 @@
          <div class="box-body no-padding">
            <div class="mailbox-controls margin-b-10">
             <div class="btn-group margin-l-5">
+              <button type="button" class="btn btn-instagram btn-sm " title="追踪" id="btnWorkListTrace"
+                    onclick="doTrace({{ wo.workOrder_num.id }})">
+                  <i class="fa fa-search"> 追踪工单</i>
+              </button>
                 {% if wo.executor == request.user %}
 
-                  {% if wo.o_state == 2 %}
+                  {% if wo.o_state == 2 %} {# 审批完成-待接单 状态 #}
                       <button type="button" class="btn btn-danger btn-sm" title="退回工单" id="btnWorkListReturn"
                               onclick="doReturn({{ wo.id }})">
-                          <i class="fa fa-undo"> 退回工单</i>
+                          <i class="fa fa-reply"> 退回工单</i>
                       </button>
                       <button type="button" class="btn btn-primary btn-sm" title="接单" id="btnWorkListHandle"
                             onclick="doHandle({{ wo.id }})">
-                          <i class="glyphicon glyphicon-play"> 接单</i>
+                          <i class="fa fa-hand-lizard-o"> 接单</i>
                       </button>
 
 
-                  {% elif wo.o_state == 3 %}
+                  {% elif wo.o_state == 3 %} {# 待执行 状态 #}
 
-                      <button type="button" class="btn btn-instagram btn-sm" title="接单" id="btnWorkListExecuted"
+                      <button type="button" class="btn btn-info btn-sm" title="接单" id="btnWorkListExecuted"
                             onclick="doExecuted({{ wo.id }})">
-                          <i class="glyphicon glyphicon-play"> 确认执行完成</i>
+                          <i class="fa  fa-send"> 确认执行完成</i>
                       </button>
 
                   {% endif %}
+                {% endif %}
 
+
+                {% if wo.sponsor == request.user %}
+                    {% if wo.o_state == 5 %} {# 待确认完成 状态 #}
+                      <button type="button" class="btn btn-info btn-sm" title="确认完成" id="btnWorkListConfirm"
+                              onclick="doConfirm({{ wo.id }})">
+                          <i class="fa  fa-thumbs-o-up"> 确认完成-结单</i>
+                      </button>
+
+                      <button type="button" class="btn btn-danger btn-sm" title="未完成" id="btnWorkListRetry"
+                              onclick="doRetry({{ wo.id }})">
+                          <i class="fa fa-hand-paper-o"> 未完成-退回</i>
+                      </button>
+                    {% endif %}
+                {% endif %}
+
+                {% if wo.approver == request.user %}
 
 
                 {% endif %}
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -281,6 +313,77 @@ function doExecuted(id) {
         }
     });
 }
+
+
+
+function doConfirm(id) {
+    console.log(id);
+    layer.msg('确认已执行完成了吗？', {
+        time: 0 //不自动关闭
+        ,btn: ['确认完成', '取消']
+        ,yes: function(index) {
+
+            layer.close(index);
+
+            $.ajax({
+                type: "POST",
+                url : "/workorder/confirm/",
+                data : {"id":id, csrfmiddlewaretoken: '{{ csrf_token }}'},  //防止post数据时报 csrf_token 403
+                cache: false,
+            });
+            },
+        end : function() {
+            //oDataTable.ajax.reload();
+            window.location.href="{% url 'workOrder:sponsor' %}";
+        }
+    });
+}
+
+
+
+function doRetry(id) {
+    console.log(id);
+    layer.msg('确认要退回重新执行吗？', {
+        time: 0 //不自动关闭
+        ,btn: ['重新执行', '取消']
+        ,yes: function(index) {
+
+            layer.close(index);
+
+            $.ajax({
+                type: "POST",
+                url : "/workorder/retry/",
+                data : {"id":id, csrfmiddlewaretoken: '{{ csrf_token }}'},  //防止post数据时报 csrf_token 403
+                cache: false,
+            });
+            },
+        end : function() {
+            //oDataTable.ajax.reload();
+            window.location.href="{% url 'workOrder:sponsor' %}";
+        }
+    });
+}
+
+
+function doTrace(id) {
+    console.log(id);
+    layer.open({
+		type : 2,
+		title : '追踪工单',
+		shadeClose : false,
+    	maxmin : true,
+		area : [ '800px', '600px' ],
+		content : [ "/workorder/trace/"+'?id='+id],
+		end : function() {
+			//oDataTable.ajax.reload();
+            window.location.reload();
+
+		}
+	});
+    {#layer.full(div)#}
+}
+
+
 
 
 </script>

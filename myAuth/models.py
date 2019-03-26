@@ -21,7 +21,12 @@ class UserInfo(auth_models.AbstractUser):
         Role,
         blank=True,
     )
-    phone = models.CharField(max_length=32)
+    telephone = models.CharField(max_length=20, verbose_name="电话")
+    department = models.CharField(null=True, blank=True, max_length=20, verbose_name="部门")
+    position = models.CharField(null=True, blank=True, max_length=64, verbose_name="职位")
+    description = models.TextField(null=True, blank=True, verbose_name="描述")
+
+    # phone = models.CharField(max_length=20)
 
     def __str__(self):
         return "{0}{1}".format(self.last_name,self.first_name)

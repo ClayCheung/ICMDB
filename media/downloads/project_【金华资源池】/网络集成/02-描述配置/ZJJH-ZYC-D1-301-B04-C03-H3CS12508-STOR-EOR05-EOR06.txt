@@ -1,0 +1,44 @@
+interface Ten-GigabitEthernet 1/3/0/47
+description TO_[ZJJH-ZYC-D1-301-C03-H3CS12508-STOR-EOR06]_XG3/3/0/47
+interface Ten-GigabitEthernet 1/3/0/48
+description TO_[ZJJH-ZYC-D1-301-C03-H3CS12508-STOR-EOR06]_XG3/3/0/48
+interface FortyGigE 1/2/0/33
+description TO_[ZJJH-ZYC-D1-301-C03-H3CS12508-STOR-EOR06]_40G3/2/0/33
+interface FortyGigE 1/2/0/34
+description TO_[ZJJH-ZYC-D1-301-C03-H3CS12508-STOR-EOR06]_40G3/2/0/34
+interface FortyGigE 1/2/0/35
+description TO_[ZJJH-ZYC-D1-301-C03-H3CS12508-STOR-EOR06]_40G3/2/0/35
+interface FortyGigE 1/2/0/36
+description TO_[ZJJH-ZYC-D1-301-C03-H3CS12508-STOR-EOR06]_40G3/2/0/36
+interface  mgmt
+description TO_[ZJJH-ZYC-D1-301-B06-H3CS7610-Pmgmt-TOR01]_G1/11/0/19
+interface FortyGigE 1/2/0/1
+description TO_[ZJJH-ZYC-D1-301-A02-H3CS6800-STOR-TOR01]_40G1/1/52
+interface FortyGigE 1/2/0/2
+description TO_[ZJJH-ZYC-D1-301-D02-H3CS6800-STOR-TOR03]_40G1/1/52
+interface FortyGigE 1/2/0/3
+description TO_[ZJJH-ZYC-D1-301-D05-H3CS6900-STOR-TOR05]_40G1/2/25
+interface FortyGigE 1/2/0/4
+description TO_[ZJJH-ZYC-D1-301-D11-H3CS6900-STOR-TOR07]_40G1/2/25
+interface  mgmt
+description TO_[ZJJH-ZYC-D1-301-C06-H3CS7610-Pmgmt-TOR02]_G2/11/0/18
+interface Ten-GigabitEthernet 3/3/0/47
+description TO_[ZJJH-ZYC-D1-301-B04-H3CS12508-STOR-EOR05]_XG1/3/0/47
+interface Ten-GigabitEthernet 3/3/0/48
+description TO_[ZJJH-ZYC-D1-301-B04-H3CS12508-STOR-EOR05]_XG1/3/0/48
+interface FortyGigE 3/2/0/33
+description TO_[ZJJH-ZYC-D1-301-B04-H3CS12508-STOR-EOR05]_40G1/2/0/33
+interface FortyGigE 3/2/0/34
+description TO_[ZJJH-ZYC-D1-301-B04-H3CS12508-STOR-EOR05]_40G1/2/0/34
+interface FortyGigE 3/2/0/35
+description TO_[ZJJH-ZYC-D1-301-B04-H3CS12508-STOR-EOR05]_40G1/2/0/35
+interface FortyGigE 3/2/0/36
+description TO_[ZJJH-ZYC-D1-301-B04-H3CS12508-STOR-EOR05]_40G1/2/0/36
+interface FortyGigE 3/2/0/1
+description TO_[ZJJH-ZYC-D1-301-A03-H3CS6800-STOR-TOR02]_40G2/1/52
+interface FortyGigE 3/2/0/2
+description TO_[ZJJH-ZYC-D1-301-D03-H3CS6800-STOR-TOR04]_40G2/1/52
+interface FortyGigE 3/2/0/3
+description TO_[ZJJH-ZYC-D1-301-D06-H3CS6900-STOR-TOR06]_40G2/2/25
+interface FortyGigE 3/2/0/4
+description TO_[ZJJH-ZYC-D1-301-D12-H3CS6900-STOR-TOR08]_40G2/2/25

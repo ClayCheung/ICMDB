@@ -9,7 +9,6 @@ def baseView(func):
         # role_list = user.role.all()
         # for role in role_list:
         #     print(role)
-
         if request.method == 'POST' and 'logout' in request.POST:
             logout(request)
             return redirect('/')

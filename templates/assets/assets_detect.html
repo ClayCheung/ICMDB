@@ -1,0 +1,144 @@
+{% extends 'base/base_operate.html' %}
+{% load staticfiles %}
+{% block title %}资产存活探测{% endblock %}
+
+{% block css %}{% endblock %}
+
+{% block content %}
+
+<form action="/assets/detect/"  method="post">
+    {% csrf_token %}
+    <section class="content">
+
+        <div class="col-xs-12">
+          <div class="box box-danger">
+            <div class="box-header">
+              <h3 class="box-title">存活探测</h3>
+            </div>
+            <div class="box-body">
+                <div class="form-group">
+                  <label>输入要探测的网段</label>
+                  <input type="text" class="form-control" name="detect_ip" id="detect_ip" placeholder="示例：188.102.10.0/24 或者 188.102.10.1-55">
+                </div>
+                <button type="submit" name="start_detect" class="btn btn-danger pull-left"
+                            data-loading-text="Detecting...">探测
+                </button>
+            </div>
+          </div>
+        </div>
+        <div class="col-xs-12">
+          <div class="box box-danger">
+            <div class="box-header">
+              <h3 class="box-title">探测结果</h3>
+            </div>
+            <div class="box-body">
+              <table id="detect_res_table" class="table table-bordered table-striped">
+                <thead>
+                <tr>
+                  <th >IP</th>
+                  <th >存活状态</th>
+                </tr>
+                </thead>
+                <tbody>
+
+                {% for host in alive_hosts_list %}
+                    <tr>
+                      <td>
+                        <a href="#" onclick="getHostDetail('{{ host}}')">{{ host }}</a>
+                      </td>
+                      <td>
+                      <i title="在线" class="fa fa-check text-green"></i>
+                          在线
+                      </td>
+                    </tr>
+                {% endfor %}
+
+                {% for host in dead_host_set %}
+                    <tr>
+                      <td>{{ host }}</td>
+                      <td>
+                      <i title="未连通" class="fa fa-remove text-red"></i>
+                          断开
+                      </td>
+                    </tr>
+                {% endfor %}
+
+
+                </tbody>
+                <tfoot>
+                <tr>
+                  <th >IP</th>
+                  <th >存活状态</th>
+                </tr>
+                </tfoot>
+              </table>
+            </div>
+          </div>
+        </div>
+    </section>
+</form>
+
+
+
+{% endblock %}
+
+{% block script %}
+<!-- Layer v3.1.1 -->
+<script src="{% static 'layer/layer.js' %}"></script>
+<!-- FastClick -->
+<script src="{% static 'bower_components/fastclick/lib/fastclick.js' %}"></script>
+<!-- Select2 -->
+<script src="{% static 'bower_components/select2/dist/js/select2.full.min.js' %}"></script>
+<!-- DataTables -->
+<script src="{% static 'bower_components/datatables.net/js/jquery.dataTables.min.js' %}"></script>
+<script src="{% static 'bower_components/datatables.net-bs/js/dataTables.bootstrap.min.js' %}"></script>
+<!-- SlimScroll -->
+<script src="{% static 'bower_components/jquery-slimscroll/jquery.slimscroll.min.js' %}"></script>
+
+
+
+    <!-- Layer v3.1.1 -->
+<script src="{% static 'layer/layer.js' %}"></script>
+    <!-- DataTables -->
+<script src="{% static 'bower_components/datatables.net/js/jquery.dataTables.min.js' %}"></script>
+<!-- SlimScroll -->
+<script src="{% static 'bower_components/jquery-slimscroll/jquery.slimscroll.min.js' %}"></script>
+<!-- FastClick -->
+<script src="{% static 'bower_components/fastclick/lib/fastclick.js' %}"></script>
+<!-- AdminLTE for demo purposes -->
+<script src="{% static 'dist/js/demo.js' %}"></script>
+
+<script src="{% static 'bower_components/datatables.net-bs/js/dataTables.bootstrap.min.js' %}"></script>
+
+
+
+
+<script>
+  $(function () {
+      $('#detect_res_table').DataTable()
+
+  })
+</script>
+
+
+<script>
+   $(function () { $('#modal-info').modal('hide')});
+</script>
+<script>
+   $(function () { $('#modal-info').on('hide.bs.modal', function () {
+      alert('项目未提交，填写的信息会留存...');})
+   });
+</script>
+
+
+
+
+
+<script>
+function getHostDetail(ip) {
+    console.log(ip);
+    window.open(["{% url 'assets:HostDetail' %}"+'?ip='+ip]);
+}
+
+</script>
+{% endblock %}

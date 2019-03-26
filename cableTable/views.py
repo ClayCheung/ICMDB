@@ -29,8 +29,7 @@ def entrance(request):
         # print(project_name)
         Project.objects.update_or_create(name=project_name)
         # print( Project.objects.filter(name=project_name))
-        print("少时诵诗书所所所所所所所")
-        print(cabletable,type(cabletable))
+        # print(cabletable,type(cabletable))
         cabletableFile = CableTableFille(file=cabletable, name=cabletable.name, project=Project.objects.filter(name=project_name)[0])
         cabletableFile.save()
 

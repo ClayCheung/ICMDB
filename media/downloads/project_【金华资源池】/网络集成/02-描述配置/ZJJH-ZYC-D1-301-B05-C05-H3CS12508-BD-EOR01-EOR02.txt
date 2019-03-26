@@ -1,0 +1,44 @@
+interface Ten-GigabitEthernet 1/2/0/46
+description TO_[ZJJH-ZYC-D1-301-C05-H3CS12508-BD-EOR02]_XG3/2/0/46
+interface Ten-GigabitEthernet 1/3/0/46
+description TO_[ZJJH-ZYC-D1-301-C05-H3CS12508-BD-EOR02]_XG3/3/0/46
+interface Ten-GigabitEthernet 1/2/0/47
+description TO_[ZJJH-ZYC-D1-301-C05-H3CS12508-BD-EOR02]_XG3/2/0/47
+interface Ten-GigabitEthernet 1/2/0/48
+description TO_[ZJJH-ZYC-D1-301-C05-H3CS12508-BD-EOR02]_XG3/2/0/48
+interface Ten-GigabitEthernet 1/3/0/47
+description TO_[ZJJH-ZYC-D1-301-C05-H3CS12508-BD-EOR02]_XG3/3/0/47
+interface Ten-GigabitEthernet 1/3/0/48
+description TO_[ZJJH-ZYC-D1-301-C05-H3CS12508-BD-EOR02]_XG3/3/0/48
+interface  mgmt
+description TO_[ZJJH-ZYC-D1-301-B06-H3CS7610-Pmgmt-TOR01]_G1/11/0/20
+interface Ten-GigabitEthernet 1/2/0/1
+description TO_[ZJJH-ZYC-D1-301-D07-H3CS6900-BD-TOR01]_XG1/1/23
+interface Ten-GigabitEthernet 1/2/0/2
+description TO_[ZJJH-ZYC-D1-301-D08-H3CS6900-BD-TOR02]_XG2/1/23
+interface Ten-GigabitEthernet 1/2/0/3
+description TO_[ZJJH-ZYC-D1-301-D13-H3CS6900-BD-TOR03]_XG1/1/23
+interface Ten-GigabitEthernet 1/2/0/4
+description TO_[ZJJH-ZYC-D1-301-D14-H3CS6900-BD-TOR04]_XG2/1/23
+interface  mgmt
+description TO_[ZJJH-ZYC-D1-301-C06-H3CS7610-Pmgmt-TOR02]_G2/11/0/20
+interface Ten-GigabitEthernet 3/2/0/46
+description TO_[ZJJH-ZYC-D1-301-B05-H3CS12508-BD-EOR01]_XG1/2/0/46
+interface Ten-GigabitEthernet 3/3/0/46
+description TO_[ZJJH-ZYC-D1-301-B05-H3CS12508-BD-EOR01]_XG1/3/0/46
+interface Ten-GigabitEthernet 3/2/0/47
+description TO_[ZJJH-ZYC-D1-301-B05-H3CS12508-BD-EOR01]_XG1/2/0/47
+interface Ten-GigabitEthernet 3/2/0/48
+description TO_[ZJJH-ZYC-D1-301-B05-H3CS12508-BD-EOR01]_XG1/2/0/48
+interface Ten-GigabitEthernet 3/3/0/47
+description TO_[ZJJH-ZYC-D1-301-B05-H3CS12508-BD-EOR01]_XG1/3/0/47
+interface Ten-GigabitEthernet 3/3/0/48
+description TO_[ZJJH-ZYC-D1-301-B05-H3CS12508-BD-EOR01]_XG1/3/0/48
+interface Ten-GigabitEthernet 3/2/0/1
+description TO_[ZJJH-ZYC-D1-301-D07-H3CS6900-BD-TOR01]_XG1/2/23
+interface Ten-GigabitEthernet 3/2/0/2
+description TO_[ZJJH-ZYC-D1-301-D08-H3CS6900-BD-TOR02]_XG2/2/23
+interface Ten-GigabitEthernet 3/2/0/3
+description TO_[ZJJH-ZYC-D1-301-D13-H3CS6900-BD-TOR03]_XG1/2/23
+interface Ten-GigabitEthernet 3/2/0/4
+description TO_[ZJJH-ZYC-D1-301-D14-H3CS6900-BD-TOR04]_XG2/2/23

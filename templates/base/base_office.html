@@ -30,7 +30,7 @@
         </ul>
 
         <ul class="nav navbar-nav">
-            <li class="active"><a href="/contact/" id="index">行政</a></li>
+            <li class="active"><a href="/workorder/sponsor/" id="index">行政</a></li>
         </ul>
 
         <ul class="nav navbar-nav">
@@ -42,100 +42,81 @@
   <!-- Navbar Right Menu -->
   <div class="navbar-custom-menu">
     <ul class="nav navbar-nav">
-      <!-- Messages: style can be found in dropdown.less-->
-      <li class="dropdown messages-menu">
-        <!-- Menu toggle button -->
-        <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-          <i class="fa fa-envelope-o"></i>
-          <span class="label label-success">4</span>
-        </a>
-        <ul class="dropdown-menu">
-          <li class="header">You have 4 messages</li>
-          <li>
-            <!-- inner menu: contains the messages -->
-            <ul class="menu">
-              <li><!-- start message -->
-                <a href="#">
-                  <div class="pull-left">
-                    <!-- User Image -->
-                    <img src="{% static 'dist/img/user2-160x160.jpg' %}" class="img-circle" alt="User Image">
-                  </div>
-                  <!-- Message title and timestamp -->
-                  <h4>
-                    Support Team
-                    <small><i class="fa fa-clock-o"></i> 5 mins</small>
-                  </h4>
-                  <!-- The message -->
-                  <p>Why not buy a new awesome theme?</p>
-                </a>
-              </li>
-              <!-- end message -->
-            </ul>
-            <!-- /.menu -->
-          </li>
-          <li class="footer"><a href="#">See All Messages</a></li>
-        </ul>
-      </li>
-      <!-- /.messages-menu -->
-
       <!-- Notifications Menu -->
       <li class="dropdown notifications-menu">
         <!-- Menu toggle button -->
         <a href="#" class="dropdown-toggle" data-toggle="dropdown">
           <i class="fa fa-bell-o"></i>
-          <span class="label label-warning">10</span>
+          <span class="label label-warning">{{ executed_confirm_set.count }}</span>
         </a>
         <ul class="dropdown-menu">
-          <li class="header">You have 10 notifications</li>
           <li>
             <!-- Inner Menu: contains the notifications -->
             <ul class="menu">
               <li><!-- start notification -->
                 <a href="#">
-                  <i class="fa fa-users text-aqua"></i> 5 new members joined today
+                    <i class="fa fa-star text-yellow"></i> 你有<b>{{ executed_confirm_set.count }} 条</b>工单被驳回或者待确认完成
+                </a>
+              </li>
+              <li><!-- start notification -->
+                <a href="#">
+                    <i class="fa fa-circle text-green"></i> 你有<b>{{ saved_wo_set.count }} 条</b>保存的工单草稿
                 </a>
               </li>
               <!-- end notification -->
             </ul>
           </li>
-          <li class="footer"><a href="#">View all</a></li>
+          <li class="footer"><a href="/workorder/sponsor/">View all</a></li>
         </ul>
       </li>
+      <!-- Messages: style can be found in dropdown.less-->
+      <li class="dropdown messages-menu">
+        <!-- Menu toggle button -->
+        <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+          <i class="fa fa-gavel"></i>
+          <span class="label label-success">{{ need_approve_set.count }}</span>
+        </a>
+        <ul class="dropdown-menu">
+          <li>
+            <!-- Inner Menu: contains the notifications -->
+            <ul class="menu">
+              <li><!-- start notification -->
+                <a href="#">
+                    <i class="fa fa-hourglass-2  text-red"></i> 你有<b>{{ need_approve_set.count }} 条</b>工单待审批或者待重审
+                </a>
+              </li>
+              <!-- end notification -->
+            </ul>
+          </li>
+          <li class="footer"><a href="/workorder/approver/">View all</a></li>
+        </ul>
+      </li>
+      <!-- /.messages-menu -->
       <!-- Tasks Menu -->
       <li class="dropdown tasks-menu">
         <!-- Menu Toggle Button -->
         <a href="#" class="dropdown-toggle" data-toggle="dropdown">
           <i class="fa fa-flag-o"></i>
-          <span class="label label-danger">9</span>
+          <span class="label label-danger">{{ wait_handle_set.count |add:wait_excute_set.count }}</span>
         </a>
         <ul class="dropdown-menu">
-          <li class="header">You have 9 tasks</li>
           <li>
-            <!-- Inner menu: contains the tasks -->
+            <!-- Inner Menu: contains the notifications -->
             <ul class="menu">
-              <li><!-- Task item -->
+              <li><!-- start notification -->
                 <a href="#">
-                  <!-- Task title and progress text -->
-                  <h3>
-                    Design some buttons
-                    <small class="pull-right">20%</small>
-                  </h3>
-                  <!-- The progress bar -->
-                  <div class="progress xs">
-                    <!-- Change the css width attribute to simulate progress -->
-                    <div class="progress-bar progress-bar-aqua" style="width: 20%" role="progressbar"
-                         aria-valuenow="20" aria-valuemin="0" aria-valuemax="100">
-                      <span class="sr-only">20% Complete</span>
-                    </div>
-                  </div>
+                    <i class="fa fa-hand-lizard-o text-yellow"></i> 你有<b>{{ wait_handle_set.count }} 条</b>工单待接单
                 </a>
               </li>
-              <!-- end task item -->
+              <li><!-- start notification -->
+                <a href="#">
+                    <i class="fa fa-fire text-red"></i> 你已接了<b>{{ wait_handle_set.count }} 条</b>工单，待执行
+                </a>
+              </li>
+              <!-- end notification -->
             </ul>
           </li>
-          <li class="footer">
-            <a href="#">View all tasks</a>
-          </li>
+          <li class="footer"><a href="/workorder/executor/">View all</a></li>
         </ul>
       </li>
       <!-- User Account Menu -->
@@ -230,19 +211,19 @@
             {% endfor %}
         </li>
         <!-- Optionally, you can add icons to the links -->
-        <li class="active"><a href="/contact/linkman/"><i class="fa fa-eye"></i> <span>联系人</span></a></li>
-        <li class="active"><a href="/contact/linkman/"><i class="fa fa-eye"></i> <span>工单统计</span></a></li>
+        <li class="active"><a href="/contact/linkman/"><i class="fa fa-fire"></i> <span>联系人</span></a></li>
+        <li class="active"><a href="{% url 'workOrder:statistics' %}"><i class="fa fa-eye"></i> <span>工单统计</span></a></li>
 
         <li class="treeview">
-          <a href="#"><i class="fa fa-edit"></i> <span>我的工单</span>
+          <a href="#"><i class="fa fa-files-o"></i> <span>我的工单</span>
             <span class="pull-right-container">
                 <i class="fa fa-angle-left pull-right"></i>
               </span>
           </a>
           <ul class="treeview-menu">
-            <li><a href="{% url 'workOrder:sponsor' %}"><i class="fa fa-file-excel-o"></i>我发起的工单</a></li>
-            <li><a href="{% url 'workOrder:approver' %}"><i class="fa fa-file-excel-o"></i>我审批的工单</a></li>
-            <li><a href="{% url 'workOrder:executor' %}"><i class="fa fa-file-excel-o"></i>我执行的工单</a></li>
+            <li><a href="{% url 'workOrder:sponsor' %}"><i class="fa fa-send"></i>我发起的工单</a></li>
+            <li><a href="{% url 'workOrder:approver' %}"><i class="fa fa-gavel"></i>我审批的工单</a></li>
+            <li><a href="{% url 'workOrder:executor' %}"><i class="fa fa-check-square-o"></i>我执行的工单</a></li>
           </ul>
         </li>
 
@@ -258,3 +239,4 @@
 {% block content %}{% endblock %}
 
 {% block script %}{% endblock %}
+

@@ -1,0 +1,18 @@
+			简称
+机框	chassis		c
+板卡	slot		s
+子板卡	subslot		subs
+端口	port		p
+
+端口类型：
+G
+XG
+40G
+100G
+-------------------------------
+
+H3C-7600:	c/s/subs/p
+H3C-6900:	c/s/p
+H3C-12500:	c/s/subs/p
+HW-E8000E:	s/subs/p
+

@@ -1,0 +1,46 @@
+{% extends 'base/base_workorder.html' %}
+
+{% load staticfiles %}
+
+{% block head %}
+    <link rel="stylesheet" href="{% static 'bower_components/bootstrap/css/bootstrap-datetimepicker.min.css' %}">
+{% endblock %}
+
+{% block content %}
+
+{% csrf_token %}
+
+
+      <div class="box box-default">
+        <div class="box-header with-border">
+          <i class="fa fa-bullhorn"></i>
+
+          <h3 class="box-title">操作完成</h3>
+        </div>
+        <!-- /.box-header -->
+        <div class="box-body">
+          <div class="callout callout-success">
+            <h4>操作已完成，请关闭本窗口。</h4>
+
+            <p>Operation has been completed, please close this window.</p>
+          </div>
+        </div>
+        <!-- /.box-body -->
+      </div>
+
+
+
+
+
+
+{% endblock %}
+
+
+
+{% block script %}
+
+
+
+
+
+{% endblock %}

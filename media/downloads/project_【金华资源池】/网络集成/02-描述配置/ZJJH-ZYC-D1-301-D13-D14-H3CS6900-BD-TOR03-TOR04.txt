@@ -1,0 +1,188 @@
+interface Ten-GigabitEthernet 2/1/1
+description TO_[ZJJH-ZYC-D1-301-D13-HW2288-SRV01]_bd_port3
+interface Ten-GigabitEthernet 2/1/2
+description TO_[ZJJH-ZYC-D1-301-D13-HW2288-SRV02]_bd_port3
+interface Ten-GigabitEthernet 2/1/3
+description TO_[ZJJH-ZYC-D1-301-D13-HW2288-SRV03]_bd_port3
+interface Ten-GigabitEthernet 2/1/4
+description TO_[ZJJH-ZYC-D1-301-D13-HW2288-SRV04]_bd_port3
+interface Ten-GigabitEthernet 2/1/5
+description TO_[ZJJH-ZYC-D1-301-D13-HW2288-SRV05]_bd_port3
+interface Ten-GigabitEthernet 2/1/6
+description TO_[ZJJH-ZYC-D1-301-D13-HW2288-SRV06]_bd_port3
+interface Ten-GigabitEthernet 2/1/7
+description TO_[ZJJH-ZYC-D1-301-D13-HW2288-SRV07]_bd_port3
+interface Ten-GigabitEthernet 2/1/8
+description TO_[ZJJH-ZYC-D1-301-D13-HW2288-SRV08]_bd_port3
+interface Ten-GigabitEthernet 2/1/9
+description TO_[ZJJH-ZYC-D1-301-D13-HW2288-SRV09]_bd_port3
+interface Ten-GigabitEthernet 2/1/10
+description TO_[ZJJH-ZYC-D1-301-D13-HW2288-SRV10]_bd_port3
+interface Ten-GigabitEthernet 2/1/11
+description TO_[ZJJH-ZYC-D1-301-D13-HW2288-SRV11]_bd_port3
+interface Ten-GigabitEthernet 2/1/12
+description TO_[ZJJH-ZYC-D1-301-D13-HW2288-SRV12]_bd_port3
+interface Ten-GigabitEthernet 2/1/13
+description TO_[ZJJH-ZYC-D1-301-D13-HW2288-SRV13]_bd_port3
+interface Ten-GigabitEthernet 2/1/14
+description TO_[ZJJH-ZYC-D1-301-D13-HW2288-SRV14]_bd_port3
+interface Ten-GigabitEthernet 2/1/15
+description TO_[ZJJH-ZYC-D1-301-D13-HW2288-SRV15]_bd_port3
+interface Ten-GigabitEthernet 2/1/16
+description TO_[ZJJH-ZYC-D1-301-D14-HW2288-SRV01]_bd_port3
+interface Ten-GigabitEthernet 2/1/17
+description TO_[ZJJH-ZYC-D1-301-D14-HW2288-SRV02]_bd_port3
+interface Ten-GigabitEthernet 2/1/18
+description TO_[ZJJH-ZYC-D1-301-D14-HW2288-SRV03]_bd_port3
+interface Ten-GigabitEthernet 2/1/19
+description TO_[ZJJH-ZYC-D1-301-D14-HW2288-SRV04]_bd_port3
+interface Ten-GigabitEthernet 2/1/20
+description TO_[ZJJH-ZYC-D1-301-D14-HW2288-SRV05]_bd_port3
+interface Ten-GigabitEthernet 2/2/1
+description TO_[ZJJH-ZYC-D1-301-D14-HW2288-SRV06]_bd_port3
+interface Ten-GigabitEthernet 2/2/2
+description TO_[ZJJH-ZYC-D1-301-D14-HW2288-SRV07]_bd_port3
+interface Ten-GigabitEthernet 2/2/3
+description TO_[ZJJH-ZYC-D1-301-D14-HW2288-SRV08]_bd_port3
+interface Ten-GigabitEthernet 2/2/4
+description TO_[ZJJH-ZYC-D1-301-D14-HW2288-SRV09]_bd_port3
+interface Ten-GigabitEthernet 2/2/5
+description TO_[ZJJH-ZYC-D1-301-D14-HW2288-SRV10]_bd_port3
+interface Ten-GigabitEthernet 2/2/6
+description TO_[ZJJH-ZYC-D1-301-D14-HW2288-SRV11]_bd_port3
+interface Ten-GigabitEthernet 2/2/7
+description TO_[ZJJH-ZYC-D1-301-D14-HW2288-SRV12]_bd_port3
+interface Ten-GigabitEthernet 2/2/8
+description TO_[ZJJH-ZYC-D1-301-D14-HW2288-SRV13]_bd_port3
+interface Ten-GigabitEthernet 2/2/9
+description TO_[ZJJH-ZYC-D1-301-D14-HW2288-SRV14]_bd_port3
+interface Ten-GigabitEthernet 2/2/10
+description TO_[ZJJH-ZYC-D1-301-D14-HW2288-SRV15]_bd_port3
+interface Ten-GigabitEthernet 2/2/11
+description TO_[ZJJH-ZYC-D1-301-D15-HW2288-SRV01]_bd_port3
+interface Ten-GigabitEthernet 2/2/12
+description TO_[ZJJH-ZYC-D1-301-D15-HW2288-SRV02]_bd_port3
+interface Ten-GigabitEthernet 2/2/13
+description TO_[ZJJH-ZYC-D1-301-D15-HW2288-SRV03]_bd_port3
+interface Ten-GigabitEthernet 2/2/14
+description TO_[ZJJH-ZYC-D1-301-D15-HW2288-SRV04]_bd_port3
+interface Ten-GigabitEthernet 2/2/15
+description TO_[ZJJH-ZYC-D1-301-D15-HW2288-SRV05]_bd_port3
+interface Ten-GigabitEthernet 2/2/16
+description TO_[ZJJH-ZYC-D1-301-D15-HW2288-SRV06]_bd_port3
+interface Ten-GigabitEthernet 2/2/17
+description TO_[ZJJH-ZYC-D1-301-D15-HW2288-SRV07]_bd_port3
+interface Ten-GigabitEthernet 2/2/18
+description TO_[ZJJH-ZYC-D1-301-D15-HW2288-SRV08]_bd_port3
+interface Ten-GigabitEthernet 2/2/19
+description TO_[ZJJH-ZYC-D1-301-D15-HW2288-SRV09]_bd_port3
+interface Ten-GigabitEthernet 2/2/20
+description TO_[ZJJH-ZYC-D1-301-D15-HW2288-SRV10]_bd_port3
+interface Ten-GigabitEthernet 2/1/23
+description TO_[ZJJH-ZYC-D1-301-B05-H3CS12508-BD-EOR01]_XG1/2/0/4
+interface Ten-GigabitEthernet 2/2/23
+description TO_[ZJJH-ZYC-D1-301-C05-H3CS12508-BD-EOR02]_XG3/2/0/4
+interface  mgmt
+description TO_[ZJJH-ZYC-D1-301-C06-H3CS7610-Pmgmt-TOR02]_G2/11/0/12
+interface Ten-GigabitEthernet 2/1/24
+description TO_[ZJJH-ZYC-D1-301-D13-H3CS6900-BD-TOR03]_XG1/1/24
+interface Ten-GigabitEthernet 2/2/24
+description TO_[ZJJH-ZYC-D1-301-D13-H3CS6900-BD-TOR03]_XG1/2/24
+interface FortyGigE 2/1/26
+description TO_[ZJJH-ZYC-D1-301-D13-H3CS6900-BD-TOR03]_40G1/1/26
+interface FortyGigE 2/2/26
+description TO_[ZJJH-ZYC-D1-301-D13-H3CS6900-BD-TOR03]_40G1/2/26
+interface Ten-GigabitEthernet 1/1/1
+description TO_[ZJJH-ZYC-D1-301-D13-HW2288-SRV01]_bd_port2
+interface Ten-GigabitEthernet 1/1/2
+description TO_[ZJJH-ZYC-D1-301-D13-HW2288-SRV02]_bd_port2
+interface Ten-GigabitEthernet 1/1/3
+description TO_[ZJJH-ZYC-D1-301-D13-HW2288-SRV03]_bd_port2
+interface Ten-GigabitEthernet 1/1/4
+description TO_[ZJJH-ZYC-D1-301-D13-HW2288-SRV04]_bd_port2
+interface Ten-GigabitEthernet 1/1/5
+description TO_[ZJJH-ZYC-D1-301-D13-HW2288-SRV05]_bd_port2
+interface Ten-GigabitEthernet 1/1/6
+description TO_[ZJJH-ZYC-D1-301-D13-HW2288-SRV06]_bd_port2
+interface Ten-GigabitEthernet 1/1/7
+description TO_[ZJJH-ZYC-D1-301-D13-HW2288-SRV07]_bd_port2
+interface Ten-GigabitEthernet 1/1/8
+description TO_[ZJJH-ZYC-D1-301-D13-HW2288-SRV08]_bd_port2
+interface Ten-GigabitEthernet 1/1/9
+description TO_[ZJJH-ZYC-D1-301-D13-HW2288-SRV09]_bd_port2
+interface Ten-GigabitEthernet 1/1/10
+description TO_[ZJJH-ZYC-D1-301-D13-HW2288-SRV10]_bd_port2
+interface Ten-GigabitEthernet 1/1/11
+description TO_[ZJJH-ZYC-D1-301-D13-HW2288-SRV11]_bd_port2
+interface Ten-GigabitEthernet 1/1/12
+description TO_[ZJJH-ZYC-D1-301-D13-HW2288-SRV12]_bd_port2
+interface Ten-GigabitEthernet 1/1/13
+description TO_[ZJJH-ZYC-D1-301-D13-HW2288-SRV13]_bd_port2
+interface Ten-GigabitEthernet 1/1/14
+description TO_[ZJJH-ZYC-D1-301-D13-HW2288-SRV14]_bd_port2
+interface Ten-GigabitEthernet 1/1/15
+description TO_[ZJJH-ZYC-D1-301-D13-HW2288-SRV15]_bd_port2
+interface Ten-GigabitEthernet 1/1/16
+description TO_[ZJJH-ZYC-D1-301-D14-HW2288-SRV01]_bd_port2
+interface Ten-GigabitEthernet 1/1/17
+description TO_[ZJJH-ZYC-D1-301-D14-HW2288-SRV02]_bd_port2
+interface Ten-GigabitEthernet 1/1/18
+description TO_[ZJJH-ZYC-D1-301-D14-HW2288-SRV03]_bd_port2
+interface Ten-GigabitEthernet 1/1/19
+description TO_[ZJJH-ZYC-D1-301-D14-HW2288-SRV04]_bd_port2
+interface Ten-GigabitEthernet 1/1/20
+description TO_[ZJJH-ZYC-D1-301-D14-HW2288-SRV05]_bd_port2
+interface Ten-GigabitEthernet 1/2/1
+description TO_[ZJJH-ZYC-D1-301-D14-HW2288-SRV06]_bd_port2
+interface Ten-GigabitEthernet 1/2/2
+description TO_[ZJJH-ZYC-D1-301-D14-HW2288-SRV07]_bd_port2
+interface Ten-GigabitEthernet 1/2/3
+description TO_[ZJJH-ZYC-D1-301-D14-HW2288-SRV08]_bd_port2
+interface Ten-GigabitEthernet 1/2/4
+description TO_[ZJJH-ZYC-D1-301-D14-HW2288-SRV09]_bd_port2
+interface Ten-GigabitEthernet 1/2/5
+description TO_[ZJJH-ZYC-D1-301-D14-HW2288-SRV10]_bd_port2
+interface Ten-GigabitEthernet 1/2/6
+description TO_[ZJJH-ZYC-D1-301-D14-HW2288-SRV11]_bd_port2
+interface Ten-GigabitEthernet 1/2/7
+description TO_[ZJJH-ZYC-D1-301-D14-HW2288-SRV12]_bd_port2
+interface Ten-GigabitEthernet 1/2/8
+description TO_[ZJJH-ZYC-D1-301-D14-HW2288-SRV13]_bd_port2
+interface Ten-GigabitEthernet 1/2/9
+description TO_[ZJJH-ZYC-D1-301-D14-HW2288-SRV14]_bd_port2
+interface Ten-GigabitEthernet 1/2/10
+description TO_[ZJJH-ZYC-D1-301-D14-HW2288-SRV15]_bd_port2
+interface Ten-GigabitEthernet 1/2/11
+description TO_[ZJJH-ZYC-D1-301-D15-HW2288-SRV01]_bd_port2
+interface Ten-GigabitEthernet 1/2/12
+description TO_[ZJJH-ZYC-D1-301-D15-HW2288-SRV02]_bd_port2
+interface Ten-GigabitEthernet 1/2/13
+description TO_[ZJJH-ZYC-D1-301-D15-HW2288-SRV03]_bd_port2
+interface Ten-GigabitEthernet 1/2/14
+description TO_[ZJJH-ZYC-D1-301-D15-HW2288-SRV04]_bd_port2
+interface Ten-GigabitEthernet 1/2/15
+description TO_[ZJJH-ZYC-D1-301-D15-HW2288-SRV05]_bd_port2
+interface Ten-GigabitEthernet 1/2/16
+description TO_[ZJJH-ZYC-D1-301-D15-HW2288-SRV06]_bd_port2
+interface Ten-GigabitEthernet 1/2/17
+description TO_[ZJJH-ZYC-D1-301-D15-HW2288-SRV07]_bd_port2
+interface Ten-GigabitEthernet 1/2/18
+description TO_[ZJJH-ZYC-D1-301-D15-HW2288-SRV08]_bd_port2
+interface Ten-GigabitEthernet 1/2/19
+description TO_[ZJJH-ZYC-D1-301-D15-HW2288-SRV09]_bd_port2
+interface Ten-GigabitEthernet 1/2/20
+description TO_[ZJJH-ZYC-D1-301-D15-HW2288-SRV10]_bd_port2
+interface Ten-GigabitEthernet 1/1/24
+description TO_[ZJJH-ZYC-D1-301-D14-H3CS6900-BD-TOR04]_XG2/1/24
+interface Ten-GigabitEthernet 1/2/24
+description TO_[ZJJH-ZYC-D1-301-D14-H3CS6900-BD-TOR04]_XG2/2/24
+interface FortyGigE 1/1/26
+description TO_[ZJJH-ZYC-D1-301-D14-H3CS6900-BD-TOR04]_40G2/1/26
+interface FortyGigE 1/2/26
+description TO_[ZJJH-ZYC-D1-301-D14-H3CS6900-BD-TOR04]_40G2/2/26
+interface Ten-GigabitEthernet 1/1/23
+description TO_[ZJJH-ZYC-D1-301-B05-H3CS12508-BD-EOR01]_XG1/2/0/3
+interface Ten-GigabitEthernet 1/2/23
+description TO_[ZJJH-ZYC-D1-301-C05-H3CS12508-BD-EOR02]_XG3/2/0/3
+interface  mgmt
+description TO_[ZJJH-ZYC-D1-301-B06-H3CS7610-Pmgmt-TOR01]_G1/11/0/12

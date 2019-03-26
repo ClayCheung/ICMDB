@@ -16,5 +16,9 @@ urlpatterns = [
     path('return/', views.workorderReturn, name='workorderReturn'),
     path('handle/', views.workorderHandle, name='workorderHandle'),
     path('executed/', views.workorderExecuted, name='workorderExecuted'),
-    path('download/', views.workorderDownload, name='workorderDownload')
+    path('download/', views.workorderDownload, name='workorderDownload'),
+    path('confirm/', views.workorderConfirm, name='workorderConfirm'),
+    path('retry/', views.workorderRetry, name='workorderRetry'),
+    path('trace/', views.workorderTrace, name='workorderTrace'),
+    path('statistics/', views.statistics, name='statistics'),
 ]

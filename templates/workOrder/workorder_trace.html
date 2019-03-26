@@ -1,0 +1,143 @@
+{% extends 'base/base_workorder.html' %}
+
+{% load staticfiles %}
+
+{% block head %}
+    <link rel="stylesheet" href="{% static 'bower_components/bootstrap/css/bootstrap-datetimepicker.min.css' %}">
+{% endblock %}
+
+{% block content %}
+
+{% csrf_token %}
+
+
+<div class="box box-info">
+        <div class="box-header with-border">
+          <h3 class="box-title">追踪工单</h3>
+        </div>
+        <!-- /.box-header -->
+        <div class="box-body">
+          <div class="row">
+            <div class="col-md-12">
+              <!-- The time line -->
+              <ul class="timeline">
+                <!-- timeline time label -->
+                <li class="time-label">
+                      <span class="bg-red">
+                        {{ won.num  }}
+                      </span>
+                </li>
+                <!-- /.timeline-label -->
+                <!-- timeline item -->
+
+
+                {% for wo in wo_trace_list %}
+                    <li>
+
+
+                      {% if wo.o_state == 0 %}  {# 已保存 #}
+                        <i class="fa fa-delicious bg-success"></i>
+                      {% elif wo.o_state == 1 %}{# 待审批 #}
+                        <i class="fa fa-gavel bg-yellow-gradient"></i>
+                      {% elif wo.o_state == 2 %}{# 审批通过-待接单 #}
+                        <i class="fa fa-hand-lizard-o bg-purple-active"></i>
+                      {% elif wo.o_state == 3 %}{# 待执行 #}
+                        <i class="fa fa-gears bg-red-active"></i>
+                      {% elif wo.o_state == 4 %}{# 待重审 #}
+                        <i class="fa fa-refresh bg-maroon-active"></i>
+                      {% elif wo.o_state == 5 %}{# 待确认完成 #}
+                        <i class="fa fa-send bg-light-blue"></i>
+                      {% elif wo.o_state == 6 %}{# 已完成 #}
+                        <i class="fa fa-star bg-olive-active"></i>
+                      {% elif wo.o_state == 7 %}{# 驳回申请 #}
+                        <i class="fa fa-close bg-black-active"></i>
+
+                      {% endif %}
+
+
+
+
+
+
+                      <div class="timeline-item">
+                        <span class="time"><i class="fa fa-clock-o"></i> {{ wo.c_time |date:'Y-m-d H:m:s' }}</span>
+
+                        <h3 class="timeline-header">
+                          {% if wo.o_state == 0 %}  {# 已保存 #}
+                              <a href="#">{{ wo.sponsor }}</a>创建并<b>保存</b>了这条工单草稿
+                          {% elif wo.o_state == 1 %}{# 待审批 #}
+                              <a href="#">{{ wo.sponsor }}</a>发送了工单至<a href="#">{{ wo.approver }}</a>，请<a href="#">{{ wo.approver }}</a><b>审批</b>
+                          {% elif wo.o_state == 2 %}{# 审批通过-待接单 #}
+                              <a href="#">{{ wo.approver }}</a>审批并<b>通过了</b>此工单，等待<a href="#">{{ wo.executor }}</a>接单
+                          {% elif wo.o_state == 3 %}{# 待执行 #}
+                                <a href="#">{{ wo.executor }}</a>已<b>确认接单</b>，正在执行中。。。
+                          {% elif wo.o_state == 4 %}{# 待重审 #}
+                              <a href="#">{{ wo.executor }}</a>对工单有疑义，望<a href="#">{{ wo.approver }}</a><b>重新审批</b>
+                          {% elif wo.o_state == 5 %}{# 待确认完成 #}
+                              <a href="#">{{ wo.executor }}</a>已执行完工单中的任务，等待<a href="#">{{ wo.sponsor }}</a><b>确认</b>是否完成任务
+                          {% elif wo.o_state == 6 %}{# 已完成 #}
+                              <a href="#">{{ wo.sponsor }}</a>确认工单任务已完成<a href="#">{{ wo.executor }}</a>任务完成，<b>完结工单</b>
+                          {% elif wo.o_state == 7 %}{# 驳回申请 #}
+                              <a href="#">{{ wo.approver }}</a>对工单有疑义，望<a href="#">{{ wo.sponsor }}</a>修改工单再提交，或者删除此单
+
+
+                          {% endif %}
+
+
+                        </h3>
+
+                        <div class="timeline-body">
+                            <b>工单标题 ：</b> {{ wo.title }}
+                        </div>
+                        <div class="timeline-footer">
+
+                          {% if wo.o_state == 0 %}
+                              <button type="button" class="btn btn-success btn-xs">{{ wo.get_o_state_display }}</button>
+                          {% elif wo.o_state == 1 %}
+                              <button type="button" class="btn btn-warning btn-xs">{{ wo.get_o_state_display }}</button>
+                          {% elif wo.o_state == 2 %}
+                              <button type="button" class="btn bg-purple-gradient btn-xs">{{ wo.get_o_state_display }}</button>
+                          {% elif wo.o_state == 3 %}
+                              <button type="button" class="btn btn-danger btn-xs">{{ wo.get_o_state_display }}</button>
+                          {% elif wo.o_state == 4 %}
+                              <button type="button" class="btn bg-maroon-active btn-xs">{{ wo.get_o_state_display }}</button>
+                          {% elif wo.o_state == 5 %}
+                              <button type="button" class="btn btn-info btn-xs">{{ wo.get_o_state_display }}</button>
+                          {% elif wo.o_state == 6 %}
+                              <button type="button" class="btn bg-olive-active btn-xs">{{ wo.get_o_state_display }}</button>
+                          {% elif wo.o_state == 7 %}
+                              <button type="button" class="btn bg-black-active btn-xs">{{ wo.get_o_state_display }}</button>
+                          {% endif %}
+                        </div>
+                      </div>
+                    </li>
+                    <!-- END timeline item -->
+                    <!-- timeline time label -->
+
+
+
+                {% endfor %}
+
+                <!-- END timeline item -->
+                <li>
+                  <i class="fa fa-clock-o bg-gray"></i>
+                </li>
+              </ul>
+            </div>
+          <!-- /.row -->
+          </div>
+        <!-- /.box-body -->
+        </div>
+</div>
+
+{% endblock %}
+
+
+
+{% block script %}
+
+
+
+
+
+{% endblock %}

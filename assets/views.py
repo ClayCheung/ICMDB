@@ -6,6 +6,10 @@ from util.network import description
 from django.contrib.auth.decorators import login_required
 from parentView.myView import baseView
 
+import nmap, os, shutil, subprocess
+from util.network.ip_input import range2list
+from ICMDB.settings import BASE_DIR
+
 # Create your views here.
 
 @baseView
@@ -172,3 +176,69 @@ def assets_view(request):
 
 
     return render(request, 'assets/assets_view.html', locals())
+
+
+@baseView
+@login_required
+def detect(request):
+    if request.method == 'POST' and 'start_detect' in request.POST:
+        """
+        开始资产存活探测
+        """
+        hosts = request.POST.get('detect_ip')
+        nm = nmap.PortScanner(nmap_search_path=('nmap',r"D:\Data&Document\Nmap\nmap.exe"))
+        s = nm.scan(hosts=hosts, arguments="-n -sP -PE")
+        # print(s)
+        alive_hosts_list = nm.all_hosts()
+        print('alive hosts -->',alive_hosts_list)
+
+
+        hosts_list = range2list(hosts)
+        print('all hosts -->', hosts_list)
+
+        dead_host_set = set(set(hosts_list)-set(alive_hosts_list))
+        print('dead hosts -->', dead_host_set)
+
+    return render(request, 'assets/assets_detect.html', locals())
+
+
+
+@baseView
+@login_required
+def getHostDetail(request):
+    if request.method=='GET':
+        host = request.GET.get('ip')
+        dir_path = os.path.join(BASE_DIR, 'templates', 'assets', 'out')
+        h_path = os.path.join(BASE_DIR, 'templates', 'assets', 'host_detail.html')
+        # 删除 dir_path,以及其中的文件
+        if os.path.exists(dir_path):
+            shutil.rmtree(dir_path)
+        # 创建 dir_path
+        os.makedirs(dir_path)
+        # 创建 单台主机的inventory
+        i_path = "{0}/{1}".format(dir_path, 'inventory')
+
+        with open(i_path, 'w+', encoding='utf-8') as f:
+            f.write('''
+[one]
+{0}  ansible_ssh_user=root ansible_ssh_pass=HStc@root&2019
+        '''.format(host))
+            f.close()
+
+        # ansible命令生成 setup 文件
+        # ansible -i inventory -m setup --tree out/ one
+        subprocess.run(["ansible", "-i", i_path, "-m", 'setup', '--tree', dir_path, 'one'])
+
+        # 删除inventory文件
+        os.remove(i_path)
+
+        # ansible-cmdb命令，根基setup文件生成html文件
+        # ansible-cmdb out/ > host_detail.html
+        s = subprocess.run(["ansible-cmdb", dir_path], stdout=subprocess.PIPE)
+        # print(s.stdout.decode("GBK"))
+        with open(h_path, 'w+', encoding='utf-8') as f:
+            f.write(s.stdout.decode("GBK"))
+            f.close()
+
+
+    return render(request, 'assets/host_detail.html', locals())

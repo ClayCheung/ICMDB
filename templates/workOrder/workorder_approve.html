@@ -29,7 +29,7 @@
 
               <div class="form-group col-xs-6">
                   <label>标题</label>
-                  <input type="text" class="form-control" name="title" id="title" value="{{ wo.title }}">
+                  <input type="text" class="form-control" name="title" id="title" value="{{ wo.title }}" required="required">
               </div>
 
               <div class="form-group col-xs-6">
@@ -42,7 +42,7 @@
                   <label for="workorder_type" class=" control-label">DeadLine</label>
 {#                  <input type="datetime-local" name="deadline" id="deadline" class="form-control" />#}
 
-                  <input type="text" class="form-control pull-right form_datetime" name="deadline" id="deadline" value="{{ wo.deadLine |date:'Y-m-d H:m:s'}}">
+                  <input type="text" class="form-control pull-right form_datetime" name="deadline" id="deadline" value="{{ wo.deadLine |date:'Y-m-d H:m:s'}}" required="required">
 
               </div>
               <!-- /.form-group -->
@@ -51,7 +51,7 @@
             <div class="col-md-6">
               <div class="form-group col-xs-6">
                 <label>所属项目</label>
-                  <input type="text" class="form-control" name="project_name" id="project_name" value="{{ wo.project }}">
+                  <input type="text" class="form-control" name="project_name" id="project_name" value="{{ wo.project }}" required="required">
               </div>
               <!-- /.form-group -->
               <div class="row1">
@@ -76,28 +76,27 @@
               </div>
               <div class="form-group col-xs-6">
                 <label for="attachment" class=" control-label">附件</label>
-                  {% if not wo.attachment %}  {# 不带附件
-                      {% if wo.o_state == 0 %}  {# 状态为 已保存
+                  {% if not wo.attachment %}  {# 不带附件 #}
+                      {% if wo.o_state == 0 %}  {# 状态为 已保存 #}
                         <input type="file"  class="btn-primary"  id="attachment" name="attachment" >
                         <p class="help-block">注意：如果有多个文件，请合成一个包</p>
-                      {% else %}    {# 状态为 其他
-                           下载label
-                          <a class="btn btn-block btn-social btn-google" onclick="doDownload({{ wo.id }})"
-                          href="/media/{{ wo.attachment }}" download="{{ wo_attaName }}">
-                            <i class="fa fa-cloud-download"></i> {{ wo_attaName }}
+                      {% else %}    {# 状态为 其他 #}
+                           {# 下载label #}
+                          <a class="btn btn-block btn-social btn-google">
+                            <i class="fa fa-cloud-download"></i> 无附件
                           </a>
                       {% endif %}
-                  {% else %}    {# 带附件
-                      {% if wo.o_state == 0 %}  {# 状态为 已保存
-                          下载label
+                  {% else %}    {# 带附件 #}
+                      {% if wo.o_state == 0 %}  {# 状态为 已保存 #}
+                          {# 下载label #}
                           <a class="btn btn-block btn-social btn-google" onclick="doDownload({{ wo.id }})"
                           href="/media/{{ wo.attachment }}" download="{{ wo_attaName }}">
                             <i class="fa fa-cloud-download"></i> {{ wo_attaName}}
                           </a>
                         <input type="file"  class="btn-primary"  id="attachment" name="attachment" >
                         <p class="help-block">注意：如果要修改附件，则在此处重新上传</p>
-                      {% else %}        {# 状态为 其他
-                           下载label
+                      {% else %}        {# 状态为 其他 #}
+                           {# 下载label #}
                           <a class="btn btn-block btn-social btn-google" onclick="doDownload({{ wo.id }})"
                           href="/media/{{ wo.attachment }}" download="{{ wo_attaName }}">
                             <i class="fa fa-cloud-download"></i> {{ wo_attaName }}
@@ -181,6 +180,11 @@
         project_list[{{ executor_index }}].selected=true;
 
 </script>
+
+
+
+
+
 
 
 

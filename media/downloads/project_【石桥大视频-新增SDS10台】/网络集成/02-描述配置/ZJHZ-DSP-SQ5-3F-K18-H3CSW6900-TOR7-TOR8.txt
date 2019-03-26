@@ -1,0 +1,40 @@
+interface Ten-GigabitEthernet 1/1/18
+description TO_[ZJHZ-DSP-SQ5-3F-K18-HW2288-SDS06]_mgmt_port1
+interface Ten-GigabitEthernet 1/1/19
+description TO_[ZJHZ-DSP-SQ5-3F-K18-HW2288-SDS07]_mgmt_port1
+interface Ten-GigabitEthernet 1/1/20
+description TO_[ZJHZ-DSP-SQ5-3F-K18-HW2288-SDS08]_mgmt_port1
+interface Ten-GigabitEthernet 1/1/21
+description TO_[ZJHZ-DSP-SQ5-3F-K18-HW2288-SDS09]_mgmt_port1
+interface Ten-GigabitEthernet 1/1/22
+description TO_[ZJHZ-DSP-SQ5-3F-K18-HW2288-SDS10]_mgmt_port1
+interface Ten-GigabitEthernet 1/2/18
+description TO_[ZJHZ-DSP-SQ5-3F-K18-HW2288-SDS06]_stor_port4
+interface Ten-GigabitEthernet 1/2/19
+description TO_[ZJHZ-DSP-SQ5-3F-K18-HW2288-SDS07]_stor_port4
+interface Ten-GigabitEthernet 1/2/20
+description TO_[ZJHZ-DSP-SQ5-3F-K18-HW2288-SDS08]_stor_port4
+interface Ten-GigabitEthernet 1/2/21
+description TO_[ZJHZ-DSP-SQ5-3F-K18-HW2288-SDS09]_stor_port4
+interface Ten-GigabitEthernet 1/2/22
+description TO_[ZJHZ-DSP-SQ5-3F-K18-HW2288-SDS10]_stor_port4
+interface Ten-GigabitEthernet 2/1/18
+description TO_[ZJHZ-DSP-SQ5-3F-K18-HW2288-SDS06]_mgmt_port6
+interface Ten-GigabitEthernet 2/1/19
+description TO_[ZJHZ-DSP-SQ5-3F-K18-HW2288-SDS07]_mgmt_port6
+interface Ten-GigabitEthernet 2/1/20
+description TO_[ZJHZ-DSP-SQ5-3F-K18-HW2288-SDS08]_mgmt_port6
+interface Ten-GigabitEthernet 2/1/21
+description TO_[ZJHZ-DSP-SQ5-3F-K18-HW2288-SDS09]_mgmt_port6
+interface Ten-GigabitEthernet 2/1/22
+description TO_[ZJHZ-DSP-SQ5-3F-K18-HW2288-SDS10]_mgmt_port6
+interface Ten-GigabitEthernet 2/2/18
+description TO_[ZJHZ-DSP-SQ5-3F-K18-HW2288-SDS06]_stor_port5
+interface Ten-GigabitEthernet 2/2/19
+description TO_[ZJHZ-DSP-SQ5-3F-K18-HW2288-SDS07]_stor_port5
+interface Ten-GigabitEthernet 2/2/20
+description TO_[ZJHZ-DSP-SQ5-3F-K18-HW2288-SDS08]_stor_port5
+interface Ten-GigabitEthernet 2/2/21
+description TO_[ZJHZ-DSP-SQ5-3F-K18-HW2288-SDS09]_stor_port5
+interface Ten-GigabitEthernet 2/2/22
+description TO_[ZJHZ-DSP-SQ5-3F-K18-HW2288-SDS10]_stor_port5

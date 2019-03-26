@@ -51,19 +51,19 @@
                       {% if wo.o_state == 0 %}
                           <button type="button" class="btn btn-success btn-xs">{{ wo.get_o_state_display }}</button>
                       {% elif wo.o_state == 1 %}
-                          <button type="button" class="btn btn-warning btn-xs">{{ wo.get_o_state_display }}</button>
+                          <button type="button" class="btn btn-warning btn-xs" onclick="doTrace({{ wo.workOrder_num.id }})">{{ wo.get_o_state_display }}</button>
                       {% elif wo.o_state == 2 %}
-                          <button type="button" class="btn btn-warning btn-xs">{{ wo.get_o_state_display }}</button>
+                          <button type="button" class="btn bg-purple-gradient btn-xs" onclick="doTrace({{ wo.workOrder_num.id }})">{{ wo.get_o_state_display }}</button>
                       {% elif wo.o_state == 3 %}
-                          <button type="button" class="btn btn-danger btn-xs">{{ wo.get_o_state_display }}</button>
+                          <button type="button" class="btn btn-danger btn-xs" onclick="doTrace({{ wo.workOrder_num.id }})">{{ wo.get_o_state_display }}</button>
                       {% elif wo.o_state == 4 %}
-                          <button type="button" class="btn bg-maroon-active btn-xs">{{ wo.get_o_state_display }}</button>
+                          <button type="button" class="btn bg-maroon-active btn-xs" onclick="doTrace({{ wo.workOrder_num.id }})">{{ wo.get_o_state_display }}</button>
                       {% elif wo.o_state == 5 %}
-                          <button type="button" class="btn bg-maroon-active btn-xs">{{ wo.get_o_state_display }}</button>
+                          <button type="button" class="btn btn-info btn-xs" onclick="doTrace({{ wo.workOrder_num.id }})">{{ wo.get_o_state_display }}</button>
                       {% elif wo.o_state == 6 %}
-                          <button type="button" class="btn btn-danger btn-xs">{{ wo.get_o_state_display }}</button>
+                          <button type="button" class="btn bg-olive-active btn-xs" onclick="doTrace({{ wo.workOrder_num.id }})">{{ wo.get_o_state_display }}</button>
                       {% elif wo.o_state == 7 %}
-                          <button type="button" class="btn bg-black-active btn-xs">{{ wo.get_o_state_display }}</button>
+                          <button type="button" class="btn bg-black-active btn-xs" onclick="doTrace({{ wo.workOrder_num.id }})">{{ wo.get_o_state_display }}</button>
                       {% endif %}
 
                       </td>
@@ -72,21 +72,37 @@
                       <td>
                         {% if wo.o_state == 0 %}   {# 已保存工单 #}
                             {% if wo.sponsor == request.user %}
-                                <button title="编辑" onclick="doEdit({{ wo.id }})"><i class="glyphicon glyphicon-list-alt"></i></button>
+                                <button title="编辑" onclick="doEdit({{ wo.id }})"><i class="glyphicon glyphicon-edit"></i></button>
                                 <button title="删除" onclick="doDelete({{ wo.workOrder_num.id }})"><i class="glyphicon glyphicon-trash"></i></button>
                             {% endif %}
                         {% elif wo.o_state == 1 or wo.o_state == 4 %}   {# 待审核 或 待重审 工单 #}
                             {% if wo.approver == request.user %}
-                                <button title="审核" onclick="doApprove({{ wo.id }})"><i class="glyphicon glyphicon-list-alt"></i></button>
-                                <button title="直接通过" onclick="doPass({{ wo.id }})"><i class="glyphicon glyphicon-edit"></i></button>
+                                <button title="审核" onclick="doApprove({{ wo.id }})"><i class="fa fa-gavel"></i></button>
+                                <button title="直接通过" onclick="doPass({{ wo.id }})"><i class="fa fa-fighter-jet"></i></button>
                             {% endif %}
                         {% elif wo.o_state == 2 %}   {# 待接单 的 工单 #}
 
                             <button title="工单详情" onclick="doDetail({{ wo.id }})"><i class="glyphicon glyphicon-list-alt"></i></button>
                             {% if wo.executor == request.user %}
-                                <button title="直接接单" onclick="doHandle({{ wo.id }})"><i class="glyphicon glyphicon-hand-left"></i></button>
+                                <button title="直接接单" onclick="doHandle({{ wo.id }})"><i class="fa fa-hand-lizard-o"></i></button>
                             {% endif %}
-
+                        {% elif wo.o_state == 3 %}   {# 待执行的工单 #}
+                            <button title="工单详情" onclick="doDetail({{ wo.id }})"><i class="glyphicon glyphicon-list-alt"></i></button>
+                            {% if wo.executor == request.user %}
+                                <button title="执行完成" onclick="doExecuted({{ wo.id }})"><i class="fa fa-rocket"></i></button>
+                            {% endif %}
+                        {% elif wo.o_state == 5 %}   {# 待确认完成的工单 #}
+                            <button title="工单详情" onclick="doDetail({{ wo.id }})"><i class="glyphicon glyphicon-list-alt"></i></button>
+                            {% if wo.sponsor == request.user %}
+                                <button title="确认执行完成" onclick="doConfirm({{ wo.id }})"><i class="fa  fa-thumbs-o-up"></i></button>
+                            {% endif %}
+                        {% elif wo.o_state == 6 %}   {# 已完成的工单 #}
+                            <button title="工单详情" onclick="doDetail({{ wo.id }})"><i class="glyphicon glyphicon-list-alt"></i></button>
+                        {% elif wo.o_state == 7 %}   {# 驳回申请 #}
+                            {% if wo.sponsor == request.user %}
+                                <button title="编辑" onclick="doEdit({{ wo.id }})"><i class="glyphicon glyphicon-edit"></i></button>
+                                <button title="删除" onclick="doDelete({{ wo.workOrder_num.id }})"><i class="glyphicon glyphicon-trash"></i></button>
+                            {% endif %}
                         {% endif %}
 
                       </td>
@@ -151,19 +167,19 @@
                       {% if wo.o_state == 0 %}
                           <button type="button" class="btn btn-success btn-xs">{{ wo.get_o_state_display }}</button>
                       {% elif wo.o_state == 1 %}
-                          <button type="button" class="btn btn-warning btn-xs">{{ wo.get_o_state_display }}</button>
+                          <button type="button" class="btn btn-warning btn-xs" onclick="doTrace({{ wo.workOrder_num.id }})">{{ wo.get_o_state_display }}</button>
                       {% elif wo.o_state == 2 %}
-                          <button type="button" class="btn btn-warning btn-xs">{{ wo.get_o_state_display }}</button>
+                          <button type="button" class="btn bg-purple-gradient btn-xs" onclick="doTrace({{ wo.workOrder_num.id }})">{{ wo.get_o_state_display }}</button>
                       {% elif wo.o_state == 3 %}
-                          <button type="button" class="btn btn-danger btn-xs">{{ wo.get_o_state_display }}</button>
+                          <button type="button" class="btn btn-danger btn-xs" onclick="doTrace({{ wo.workOrder_num.id }})">{{ wo.get_o_state_display }}</button>
                       {% elif wo.o_state == 4 %}
-                          <button type="button" class="btn bg-maroon-active btn-xs">{{ wo.get_o_state_display }}</button>
+                          <button type="button" class="btn bg-maroon-active btn-xs" onclick="doTrace({{ wo.workOrder_num.id }})">{{ wo.get_o_state_display }}</button>
                       {% elif wo.o_state == 5 %}
-                          <button type="button" class="btn bg-maroon-active btn-xs">{{ wo.get_o_state_display }}</button>
+                          <button type="button" class="btn btn-info btn-xs" onclick="doTrace({{ wo.workOrder_num.id }})">{{ wo.get_o_state_display }}</button>
                       {% elif wo.o_state == 6 %}
-                          <button type="button" class="btn btn-danger btn-xs">{{ wo.get_o_state_display }}</button>
+                          <button type="button" class="btn bg-olive-active btn-xs" onclick="doTrace({{ wo.workOrder_num.id }})">{{ wo.get_o_state_display }}</button>
                       {% elif wo.o_state == 7 %}
-                          <button type="button" class="btn bg-black-active btn-xs">{{ wo.get_o_state_display }}</button>
+                          <button type="button" class="btn bg-black-active btn-xs" onclick="doTrace({{ wo.workOrder_num.id }})">{{ wo.get_o_state_display }}</button>
                       {% endif %}
 
                       </td>
@@ -172,21 +188,37 @@
                       <td>
                         {% if wo.o_state == 0 %}   {# 已保存工单 #}
                             {% if wo.sponsor == request.user %}
-                                <button title="编辑" onclick="doEdit({{ wo.id }})"><i class="glyphicon glyphicon-list-alt"></i></button>
+                                <button title="编辑" onclick="doEdit({{ wo.id }})"><i class="glyphicon glyphicon-edit"></i></button>
                                 <button title="删除" onclick="doDelete({{ wo.workOrder_num.id }})"><i class="glyphicon glyphicon-trash"></i></button>
                             {% endif %}
                         {% elif wo.o_state == 1 or wo.o_state == 4 %}   {# 待审核 或 待重审 工单 #}
                             {% if wo.approver == request.user %}
-                                <button title="审核" onclick="doApprove({{ wo.id }})"><i class="glyphicon glyphicon-list-alt"></i></button>
-                                <button title="直接通过" onclick="doPass({{ wo.id }})"><i class="glyphicon glyphicon-edit"></i></button>
+                                <button title="审核" onclick="doApprove({{ wo.id }})"><i class="fa fa-gavel"></i></button>
+                                <button title="直接通过" onclick="doPass({{ wo.id }})"><i class="fa fa-fighter-jet"></i></button>
                             {% endif %}
                         {% elif wo.o_state == 2 %}   {# 待接单 的 工单 #}
 
                             <button title="工单详情" onclick="doDetail({{ wo.id }})"><i class="glyphicon glyphicon-list-alt"></i></button>
                             {% if wo.executor == request.user %}
-                                <button title="直接接单" onclick="doHandle({{ wo.id }})"><i class="glyphicon glyphicon-hand-left"></i></button>
+                                <button title="直接接单" onclick="doHandle({{ wo.id }})"><i class="fa fa-hand-lizard-o"></i></button>
                             {% endif %}
-
+                        {% elif wo.o_state == 3 %}   {# 待执行的工单 #}
+                            <button title="工单详情" onclick="doDetail({{ wo.id }})"><i class="glyphicon glyphicon-list-alt"></i></button>
+                            {% if wo.executor == request.user %}
+                                <button title="执行完成" onclick="doExecuted({{ wo.id }})"><i class="fa fa-rocket"></i></button>
+                            {% endif %}
+                        {% elif wo.o_state == 5 %}   {# 待确认完成的工单 #}
+                            <button title="工单详情" onclick="doDetail({{ wo.id }})"><i class="glyphicon glyphicon-list-alt"></i></button>
+                            {% if wo.sponsor == request.user %}
+                                <button title="确认执行完成" onclick="doConfirm({{ wo.id }})"><i class="fa  fa-thumbs-o-up"></i></button>
+                            {% endif %}
+                        {% elif wo.o_state == 6 %}   {# 已完成的工单 #}
+                            <button title="工单详情" onclick="doDetail({{ wo.id }})"><i class="glyphicon glyphicon-list-alt"></i></button>
+                        {% elif wo.o_state == 7 %}   {# 驳回申请 #}
+                            {% if wo.sponsor == request.user %}
+                                <button title="编辑" onclick="doEdit({{ wo.id }})"><i class="glyphicon glyphicon-edit"></i></button>
+                                <button title="删除" onclick="doDelete({{ wo.workOrder_num.id }})"><i class="glyphicon glyphicon-trash"></i></button>
+                            {% endif %}
                         {% endif %}
 
                       </td>
@@ -252,41 +284,22 @@
 </script>
 
 <script>
-  $('#parentIframe').on('click', function(){
-    layer.open({
-      type: 2,
-      title: '创建工单',
-      maxmin: true,
-      shadeClose: false, //点击遮罩关闭层
-      area : ['800px' , '600px'],
-      content: '/workorder/create/',
-      end : function() {
-          //oDataTable.ajax.reload();
-          window.location.reload();
-      }
-
-    });
-  });
-
-</script>
-
-<script>
 
 function doEdit(id) {
     console.log(id);
     layer.open({
-		type : 2,
-		title : '修改工单',
-		shadeClose : false,
-    	maxmin : true,
-		area : [ '800px', '600px' ],
-		content : [ "/workorder/update/"+'?id='+id],
-		end : function() {
-			//oDataTable.ajax.reload();
+        type : 2,
+        title : '修改工单',
+        shadeClose : false,
+        maxmin : true,
+        area : [ '800px', '600px' ],
+        content : [ "/workorder/update/"+'?id='+id],
+        end : function() {
+            //oDataTable.ajax.reload();
             window.location.reload();
 
-		}
-	});
+        }
+    });
     {#layer.full(div)#}
 }
 
@@ -317,18 +330,144 @@ function doDelete(id) {
 function doApprove(id) {
     console.log(id);
     layer.open({
-		type : 2,
-		title : '审批工单',
-		shadeClose : false,
-    	maxmin : true,
-		area : [ '800px', '600px' ],
-		content : [ "/workorder/doapprove/"+'?id='+id],
-		end : function() {
-			//oDataTable.ajax.reload();
+        type : 2,
+        title : '审批工单',
+        shadeClose : false,
+        maxmin : true,
+        area : [ '800px', '600px' ],
+        content : [ "/workorder/doapprove/"+'?id='+id],
+        end : function() {
+            //oDataTable.ajax.reload();
             window.location.reload();
 
-		}
-	});
+        }
+    });
+    {#layer.full(div)#}
+}
+
+
+function doDetail(id) {
+    console.log(id);
+    {#window.location.href="{% url 'workOrder:workorderDetail' %}"+'?id='+id;#}
+
+    window.open(["{% url 'workOrder:workorderDetail' %}"+'?id='+id]);
+}
+
+
+
+function doHandle(id) {
+    console.log(id);
+    layer.msg('确认接单吗？', {
+        time: 0 //不自动关闭
+        ,btn: ['确定', '取消']
+        ,yes: function(index) {
+
+            layer.close(index);
+
+            $.ajax({
+                type: "POST",
+                url : "/workorder/handle/",
+                data : {"id":id, csrfmiddlewaretoken: '{{ csrf_token }}'},  //防止post数据时报 csrf_token 403
+                cache: false,
+            });
+            },
+        end : function() {
+            //oDataTable.ajax.reload();
+            window.location.href="{% url 'workOrder:executor' %}";
+        }
+    });
+}
+
+
+function doExecuted(id) {
+    console.log(id);
+    layer.msg('确认已执行了吗？', {
+        time: 0 //不自动关闭
+        ,btn: ['确定', '取消']
+        ,yes: function(index) {
+
+            layer.close(index);
+
+            $.ajax({
+                type: "POST",
+                url : "/workorder/executed/",
+                data : {"id":id, csrfmiddlewaretoken: '{{ csrf_token }}'},  //防止post数据时报 csrf_token 403
+                cache: false,
+            });
+            },
+        end : function() {
+            //oDataTable.ajax.reload();
+            window.location.href="{% url 'workOrder:executor' %}";
+        }
+    });
+}
+
+
+
+function doPass(id) {
+    console.log(id);
+    layer.msg('确定直接审批通过吗？', {
+        time: 0 //不自动关闭
+        ,btn: ['确定', '再看看']
+        ,yes: function(index) {
+
+            layer.close(index);
+
+            $.ajax({
+                type: "POST",
+                url : "/workorder/pass/",
+                data : {"id":id, csrfmiddlewaretoken: '{{ csrf_token }}'},  //防止post数据时报 csrf_token 403
+                cache: false,
+            });
+            },
+        end : function() {
+            //oDataTable.ajax.reload();
+            window.location.reload();
+        }
+    });
+}
+
+
+
+function doConfirm(id) {
+    console.log(id);
+    layer.msg('确认已执行完成了吗？', {
+        time: 0 //不自动关闭
+        ,btn: ['确认完成', '取消']
+        ,yes: function(index) {
+
+            layer.close(index);
+
+            $.ajax({
+                type: "POST",
+                url : "/workorder/confirm/",
+                data : {"id":id, csrfmiddlewaretoken: '{{ csrf_token }}'},  //防止post数据时报 csrf_token 403
+                cache: false,
+            });
+            },
+        end : function() {
+            //oDataTable.ajax.reload();
+            window.location.href="{% url 'workOrder:sponsor' %}";
+        }
+    });
+}
+
+
+function doTrace(id) {
+    console.log(id);
+    layer.open({
+        type : 2,
+        title : '追踪工单',
+        shadeClose : false,
+        maxmin : true,
+        area : [ '800px', '600px' ],
+        content : [ "/workorder/trace/"+'?id='+id],
+        end : function() {
+            //oDataTable.ajax.reload();
+            window.location.reload();
+
+        }
+    });
     {#layer.full(div)#}
 }
 
