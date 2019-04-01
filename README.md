@@ -1,4 +1,4 @@
-﻿# Django ICMDB
+﻿# Integration CMDB
 
 ## OverView
 * [Development Document](#development-document)
@@ -90,7 +90,7 @@ Util：后端模块工具集合
 ```
 ### Project screenshots
 
-* Assets manage 
+* Configuration Management of Assets 
 ![assets_1](docs/img/assets_1.jpg)  
 ![alive_detect](docs/img/alive_detect.jpg)  
 ![ansible_cmdb](docs/img/ansible_cmdb.jpg)  
