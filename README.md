@@ -10,7 +10,7 @@
 ## Development Document
 ### Architecture
 * Event Ralationship Diagram  
-![](docs\img\Assets_Models_ER_Diagram.png)  
+![](docs/img/Assets_Models_ER_Diagram.png)  
 ![](docs\img\WorkOrder_Models_ER_Diagram.png)
 * Instruction of data tables
 
