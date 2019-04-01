@@ -109,7 +109,7 @@ Util：后端模块工具集合
 
 ## Version & Plan
 ### Version
-#### 当前版本
+#### Current Version
 - [1.3.0]
 	- 新加的功能
 		1. 资产存活检测
