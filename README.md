@@ -10,8 +10,8 @@
 ## Development Document
 ### Architecture
 * Event Ralationship Diagram  
-![](docs/img/Assets_Models_ER_Diagram.png)  
-![](docs\img\WorkOrder_Models_ER_Diagram.png)
+![Assets_Models_ER_Diagram](docs/img/Assets_Models_ER_Diagram.png)  
+![WorkOrder_Models_ER_Diagram](docs/img/WorkOrder_Models_ER_Diagram.png)
 * Instruction of data tables
 
 table | instruction
@@ -91,21 +91,21 @@ Util：后端模块工具集合
 ### Project screenshots
 
 * Assets manage 
-![](docs\img\assets_1.jpg)  
-![](docs\img\alive_detect.jpg)  
-![](docs\img\ansible_cmdb.jpg)  
+![assets_1](docs/img/assets_1.jpg)  
+![alive_detect](docs/img/alive_detect.jpg)  
+![ansible_cmdb](docs/img/ansible_cmdb.jpg)  
 
 * Approve Cable tables  
-![](docs\img\cableTable_2.jpg)  
-![](docs\img\cableTable_3.jpg)  
-![](docs\img\cableTable_1.jpg)  
+![import cableTable](docs/img/cableTable_2.jpg)  
+![import cableTable_2](docs/img/cableTable_3.jpg)  
+![approve cableTable](docs/img/cableTable_1.jpg)  
 
 * WorkOrder Module  
-![](docs\img\workOrder_1.gif)  
-![](docs\img\workOrder_2.gif)  
-![](docs\img\workOrder_3.jpg)  
-![](docs\img\workOrder_4.jpg)  
-![](docs\img\workOrder_5.jpg)  
+![workOrder_1](docs/img/workOrder_1.gif)  
+![workOrder_2](docs/img/workOrder_2.gif)  
+![workOrder_3](docs/img/workOrder_3.jpg)  
+![workOrder_4](docs/img/workOrder_4.jpg)  
+![workOrder_5](docs/img/workOrder_5.jpg)  
 
 ## Version & Plan
 ### Version
