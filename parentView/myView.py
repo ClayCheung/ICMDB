@@ -3,12 +3,6 @@ from django.shortcuts import render, redirect
 
 
 def baseView(func):
-    """
-    A Decorator for any view func,
-     used to add logout function.
-    :param func:
-    :return:
-    """
     def wrapper(request, *args, **kwargs):# 带被装饰的函数的参数
 
         # user = request.user

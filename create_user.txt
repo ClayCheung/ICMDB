@@ -1,31 +1,4 @@
 from myAuth.models import UserInfo
 
 UserInfo.objects.create_user(username='zhangkl',password='1qaz@WSX',last_name='张',first_name='凯伦',
-email='15967188037@139.com',telephone='15967188037',department='网络组',position='网络工程师')
-
-UserInfo.objects.create_user(username='songhx',password='1qaz@WSX',last_name='宋',first_name='海星',
-email='13600533011@139.com',telephone='13600533011',department='系统组',position='系统工程师')
-
-UserInfo.objects.create_user(username='qiaoxp',password='1qaz@WSX',last_name='乔',first_name='小朋',
-email='13634111881@139.com',telephone='13634111881',department='集成组',position='项目经理')
-
-UserInfo.objects.create_user(username='linqm',password='1qaz@WSX',last_name='林',first_name='巧妙',
-email='15088758790@139.com',telephone='15088758790',department='NFV组',position='NFV工程师')
-
-UserInfo.objects.create_user(username='kongfj',password='1qaz@WSX',last_name='孔',first_name='凡俭',
-email='15869158660@139.com',telephone='15869158660',department='运营组',position='工程师')
-
-UserInfo.objects.create_user(username='fulz',password='1qaz@WSX',last_name='傅',first_name='立中',
-email='18058133597@189.cn',telephone='18058133597',department='运营组',position='工程师')
-
-UserInfo.objects.create_user(username='lousw',password='1qaz@WSX',last_name='楼',first_name='沈威',
-email='15158133831@139.com',telephone='15158133831',department='运营组',position='工程师')
-
-UserInfo.objects.create_user(username='wuyl',password='1qaz@WSX',last_name='吴',first_name='云龙',
-email='15968163548@139.com',telephone='15968163548',department='集成组',position='工程师')
-
-UserInfo.objects.create_user(username='lipeng',password='1qaz@WSX',last_name='李',first_name='朋',
-email='15394253459@139.com',telephone='15394253459',department='集成组',position='工程师')
-
-UserInfo.objects.create_user(username='zengjf',password='1qaz@WSX',last_name='曾',first_name='剑峰',
-email='wingkind@139.com',telephone='13757199171',department='运营组',position='项目经理')
+email='clay.zhang@outlook.com',telephone='15967188037',department='网络组',position='运维开发工程师')

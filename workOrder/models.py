@@ -22,6 +22,7 @@ def attachment_directory_path(instance, filename):
     return 'workOrder/【{0}】/{1}'.format(instance.project, instance.attachment)
 
 
+
 class WorkOrder(models.Model):
     """工单"""
 
